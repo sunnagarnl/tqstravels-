@@ -635,12 +635,12 @@ function tqs_render_form() {
 		delete_transient( $error_key );
 	}
 
-	$sent = isset( $_GET['tqs_sent'] ) && $_GET['tqs_sent'] === '1';
+	$sent = isset( $_GET['tqs_sent'] ) && sanitize_text_field( wp_unslash( $_GET['tqs_sent'] ) ) === '1';
 
 	$airport_groups_json = wp_json_encode( tqs_airport_groups() );
 	$dial_codes_json     = wp_json_encode( tqs_dialing_codes_flat() );
 
-	$action = esc_url( get_permalink() ?: home_url( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ?? '/' ) ) ) );
+	$action = esc_url( get_permalink() ?: home_url( '/' ) );
 
 	ob_start();
 	?>
@@ -813,9 +813,8 @@ function tqs_render_form() {
 	</div>
 
 	<script>
-	(function(){
-		var airportGroups = <?php echo $airport_groups_json; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- JSON-encoded ?>;
-		var dialCodes     = <?php echo $dial_codes_json; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- JSON-encoded ?>;
+	var airportGroups = <?php echo $airport_groups_json; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- JSON-encoded ?>;
+	var dialCodes     = <?php echo $dial_codes_json; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- JSON-encoded ?>;
 	</script>
 	<?php
 	return ob_get_clean();
