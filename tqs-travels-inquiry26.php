@@ -10,6 +10,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+define( 'TQS_INQUIRY_DEFAULT_EMAIL', 'travel@travelbytqs.com' );
 // ============================================================
 // ENQUEUE INLINE CSS + JS
 // ============================================================
@@ -375,6 +376,53 @@ function initCharCounter(){
 function initFormGuard(){
   var form=document.getElementById('tqs-main-form');if(!form)return;
   form.addEventListener('submit',function(e){
+    /* Required fields check */
+    var missing=[];
+    if(!form.tqs_full_name.value.trim()) missing.push('Full Name');
+    if(!form.tqs_email.value.trim())     missing.push('Email Address');
+    if(!form.tqs_phone.value.trim())     missing.push('Phone Number');
+    var at=document.querySelector('input[name="tqs_travel_type"]:checked');
+    if(!at) missing.push('Travel Type');
+    if(form.tqs_trip_type&&!form.tqs_trip_type.value) missing.push('Trip Category');
+    if(form.tqs_cabin&&!form.tqs_cabin.value) missing.push('Cabin Class');
+    if(at){
+      if(at.value==='oneway'){
+        var f1=document.getElementById('tqs_from'),f2=document.getElementById('tqs_destination'),f3=document.getElementById('tqs_travel_date');
+        if(!f1||!f1.value) missing.push('Traveling From (airport)');
+        if(!f2||!f2.value) missing.push('Destination (airport)');
+        if(!f3||!f3.value) missing.push('Departure Date');
+      } else if(at.value==='return'){
+        var r1=document.getElementById('tqs_from_return'),r2=document.getElementById('tqs_destination_return');
+        var r3=document.getElementById('tqs_travel_date_return'),r4=document.getElementById('tqs_return_date');
+        if(!r1||!r1.value) missing.push('Traveling From (airport)');
+        if(!r2||!r2.value) missing.push('Destination (airport)');
+        if(!r3||!r3.value) missing.push('Departure Date');
+        if(!r4||!r4.value) missing.push('Return Date');
+      } else if(at.value==='multicity'){
+        var mf=document.querySelectorAll('[name="tqs_mc_from[]"]');
+        var mt=document.querySelectorAll('[name="tqs_mc_to[]"]');
+        var md=document.querySelectorAll('[name="tqs_mc_dep_date[]"]');
+        mf.forEach(function(el,i){
+          if(!el.value)            missing.push('Leg '+(i+1)+' Departure Airport');
+          if(mt[i]&&!mt[i].value)  missing.push('Leg '+(i+1)+' Arrival Airport');
+          if(md[i]&&!md[i].value)  missing.push('Leg '+(i+1)+' Departure Date');
+        });
+      }
+    }
+    if(missing.length){
+      e.preventDefault();
+      var msg=document.getElementById('tqs-missing-msg');
+      if(!msg){msg=document.createElement('div');msg.id='tqs-missing-msg';
+        msg.style.cssText='background:#ff4d6d22;border:1px solid #ff4d6d;color:#ff4d6d;padding:14px 18px;border-radius:8px;margin-bottom:18px;';
+        form.prepend(msg);}
+      msg.innerHTML='';
+      var hdr=document.createElement('strong');hdr.textContent='Please fill in all required fields:';msg.appendChild(hdr);
+      var ul=document.createElement('ul');ul.style.cssText='margin:8px 0 0 18px';
+      missing.forEach(function(f){var li=document.createElement('li');li.textContent=f;ul.appendChild(li);});
+      msg.appendChild(ul);
+      msg.scrollIntoView({behavior:'smooth',block:'center'});
+      return;
+    }
     clearPaxError();var blocked=false;
     if(validatePhoneFields())blocked=true;
     var tot=pax.adults+pax.kids+pax.infants;
@@ -732,6 +780,7 @@ function tqs_render_inquiry_form() {
 
             $travel_type    = sanitize_text_field( wp_unslash( $_POST['tqs_travel_type'] ?? '' ) );
             $trip_type      = sanitize_text_field( wp_unslash( $_POST['tqs_trip_type']   ?? '' ) );
+            $cabin          = sanitize_text_field( wp_unslash( $_POST['tqs_cabin']       ?? '' ) );
             $budget         = sanitize_text_field( wp_unslash( $_POST['tqs_budget']      ?? '' ) );
             $services       = isset( $_POST['tqs_services'] )       ? array_map( 'sanitize_text_field', array_map( 'wp_unslash', (array) $_POST['tqs_services'] ) )       : [];
             $quick_requests = isset( $_POST['tqs_quick_requests'] ) ? array_map( 'sanitize_text_field', array_map( 'wp_unslash', (array) $_POST['tqs_quick_requests'] ) ) : [];
@@ -768,6 +817,11 @@ function tqs_render_inquiry_form() {
                 foreach ( $mc_froms as $i => $mf ) {
                     $dep = $mc_dep_dates[$i] ?? ''; $arr = $mc_arr_dates[$i] ?? '';
                     if ( $dep && $arr && $arr < $dep ) $errors[] = 'Leg ' . ($i+1) . ': Arrival date cannot be before departure date.';
+                    $mfv = ($mf === 'other' || empty($mf)) ? ($mc_from_others[$i] ?? '') : $mf;
+                    $mtv = (($mc_tos[$i] ?? '') === 'other' || empty($mc_tos[$i] ?? '')) ? ($mc_to_others[$i] ?? '') : ($mc_tos[$i] ?? '');
+                    if ( empty($mfv) ) $errors[] = 'Leg ' . ($i+1) . ': Departure airport is required.';
+                    if ( empty($mtv) ) $errors[] = 'Leg ' . ($i+1) . ': Arrival airport is required.';
+                    if ( empty($dep) ) $errors[] = 'Leg ' . ($i+1) . ': Departure date is required.';
                     $mc_legs[] = [ 'from'=>$mf, 'from_other'=>$mc_from_others[$i]??'', 'to'=>$mc_tos[$i]??'', 'to_other'=>$mc_to_others[$i]??'', 'dep_date'=>$dep, 'arr_date'=>$arr ];
                 }
             }
@@ -783,18 +837,24 @@ function tqs_render_inquiry_form() {
             }
             if ( empty($travel_type) )                                    $errors[] = 'Please select a travel type.';
             if ( $travel_type === 'oneway' ) {
+                $fv = ($from === 'other' || empty($from)) ? $from_other : $from;
                 $dv = ($destination==='other'||empty($destination)) ? $dest_other : $destination;
+                if ( empty($fv) )          $errors[] = 'Origin airport is required.';
                 if ( empty($dv) )          $errors[] = 'Destination airport is required.';
                 if ( empty($travel_date) ) $errors[] = 'Departure date is required.';
             }
             if ( $travel_type === 'return' ) {
+                $rfv = ($return_from === 'other' || empty($return_from)) ? $return_from_other : $return_from;
                 $rdv = ($return_dest==='other'||empty($return_dest)) ? $return_dest_other : $return_dest;
+                if ( empty($rfv) )         $errors[] = 'Origin airport is required.';
                 if ( empty($rdv) )         $errors[] = 'Destination airport is required.';
                 if ( empty($return_dep) )  $errors[] = 'Departure date is required.';
                 if ( empty($return_arr) )  $errors[] = 'Return date is required.';
                 if ( !empty($return_dep)&&!empty($return_arr)&&$return_arr<=$return_dep ) $errors[] = 'Return date must be after the departure date.';
             }
             if ( $travel_type==='multicity'&&count($mc_legs)<3 ) $errors[] = 'Please add at least 3 legs for a Multi-City trip.';
+            if ( empty($trip_type) )    $errors[] = 'Please select a trip category.';
+            if ( empty($cabin) )        $errors[] = 'Please select a cabin class.';
             if ( $adults<1 )        $errors[] = 'At least 1 adult (12+) is required.';
             if ( $total>9 )         $errors[] = 'Total passengers cannot exceed 9. You selected '.$total.'.';
             if ( $infants>$adults ) $errors[] = 'Infants ('.$infants.') cannot exceed adults ('.$adults.').';
@@ -805,7 +865,7 @@ function tqs_render_inquiry_form() {
                     $from, $from_other, $destination, $dest_other,
                     $return_from, $return_from_other, $return_dest, $return_dest_other,
                     $travel_date, $return_dep, $return_arr, $mc_legs,
-                    $adults, $kids, $infants, $trip_type, $budget, $services,
+                    $adults, $kids, $infants, $trip_type, $cabin, $budget, $services,
                     $quick_requests, $message
                 );
             }
@@ -909,24 +969,24 @@ function tqs_render_form() {
     <!-- ONE WAY -->
     <div class="tqs-form-section tqs-type-section" id="tqs-section-oneway"><h3>Flight Details - One Way</h3>
       <div class="tqs-row">
-        <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Traveling From','name'=>'tqs_from','id'=>'tqs_from','airports'=>$airports,'selected'=>sanitize_text_field($_POST['tqs_from']??''),'other_val'=>sanitize_text_field($_POST['tqs_from_other']??''),'other_name'=>'tqs_from_other']); ?></div>
+        <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Traveling From','name'=>'tqs_from','id'=>'tqs_from','airports'=>$airports,'selected'=>sanitize_text_field($_POST['tqs_from']??''),'other_val'=>sanitize_text_field($_POST['tqs_from_other']??''),'other_name'=>'tqs_from_other','required'=>true]); ?></div>
         <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Destination','name'=>'tqs_destination','id'=>'tqs_destination','airports'=>$airports,'selected'=>sanitize_text_field($_POST['tqs_destination']??''),'other_val'=>sanitize_text_field($_POST['tqs_destination_other']??''),'other_name'=>'tqs_destination_other','required'=>true]); ?></div>
       </div>
       <div class="tqs-row"><div class="tqs-field" style="max-width:280px;">
         <label for="tqs_travel_date">Departure Date <span class="required">*</span></label>
-        <input type="date" id="tqs_travel_date" name="tqs_travel_date" value="<?php echo esc_attr($_POST['tqs_travel_date']??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" />
+        <input type="date" id="tqs_travel_date" name="tqs_travel_date" value="<?php echo esc_attr($_POST['tqs_travel_date']??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" required />
       </div></div>
     </div>
 
     <!-- RETURN -->
     <div class="tqs-form-section tqs-type-section" id="tqs-section-return"><h3>Flight Details - Return</h3>
       <div class="tqs-row">
-        <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Traveling From','name'=>'tqs_from_return','id'=>'tqs_from_return','airports'=>$airports,'selected'=>sanitize_text_field($_POST['tqs_from_return']??''),'other_val'=>sanitize_text_field($_POST['tqs_from_return_other']??''),'other_name'=>'tqs_from_return_other']); ?></div>
+        <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Traveling From','name'=>'tqs_from_return','id'=>'tqs_from_return','airports'=>$airports,'selected'=>sanitize_text_field($_POST['tqs_from_return']??''),'other_val'=>sanitize_text_field($_POST['tqs_from_return_other']??''),'other_name'=>'tqs_from_return_other','required'=>true]); ?></div>
         <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Destination','name'=>'tqs_destination_return','id'=>'tqs_destination_return','airports'=>$airports,'selected'=>sanitize_text_field($_POST['tqs_destination_return']??''),'other_val'=>sanitize_text_field($_POST['tqs_destination_return_other']??''),'other_name'=>'tqs_destination_return_other','required'=>true]); ?></div>
       </div>
       <div class="tqs-row">
-        <div class="tqs-field"><label>Departure Date <span class="required">*</span></label><input type="date" name="tqs_travel_date_return" id="tqs_travel_date_return" value="<?php echo esc_attr($_POST['tqs_travel_date_return']??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" onchange="tqsReturnDepChanged(this)" /></div>
-        <div class="tqs-field"><label>Return Date <span class="required">*</span></label><input type="date" name="tqs_return_date" id="tqs_return_date" value="<?php echo esc_attr($_POST['tqs_return_date']??''); ?>" min="<?php echo esc_attr($_POST['tqs_travel_date_return']??date('Y-m-d')); ?>" onchange="tqsReturnArrChanged(this)" /></div>
+        <div class="tqs-field"><label>Departure Date <span class="required">*</span></label><input type="date" name="tqs_travel_date_return" id="tqs_travel_date_return" value="<?php echo esc_attr($_POST['tqs_travel_date_return']??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" onchange="tqsReturnDepChanged(this)" required /></div>
+        <div class="tqs-field"><label>Return Date <span class="required">*</span></label><input type="date" name="tqs_return_date" id="tqs_return_date" value="<?php echo esc_attr($_POST['tqs_return_date']??''); ?>" min="<?php echo esc_attr($_POST['tqs_travel_date_return']??date('Y-m-d')); ?>" onchange="tqsReturnArrChanged(this)" required /></div>
       </div>
       <div id="tqs-return-date-error" class="tqs-return-date-error" style="display:none;">Return date must be after the departure date.</div>
     </div>
@@ -947,11 +1007,11 @@ function tqs_render_form() {
             <?php if($i>=3): ?><button type="button" class="tqs-remove-leg" onclick="tqsRemoveLeg(this)">Remove</button><?php endif; ?>
           </div>
           <div class="tqs-row">
-            <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Departure Airport','name'=>'tqs_mc_from[]','id'=>'tqs_mc_from_'.$i,'airports'=>$airports,'selected'=>sanitize_text_field($mcf[$i]??''),'other_val'=>sanitize_text_field($mcfo[$i]??''),'other_name'=>'tqs_mc_from_other[]']); ?></div>
-            <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Arrival Airport','name'=>'tqs_mc_to[]','id'=>'tqs_mc_to_'.$i,'airports'=>$airports,'selected'=>sanitize_text_field($mct[$i]??''),'other_val'=>sanitize_text_field($mcto[$i]??''),'other_name'=>'tqs_mc_to_other[]']); ?></div>
+            <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Departure Airport','name'=>'tqs_mc_from[]','id'=>'tqs_mc_from_'.$i,'airports'=>$airports,'selected'=>sanitize_text_field($mcf[$i]??''),'other_val'=>sanitize_text_field($mcfo[$i]??''),'other_name'=>'tqs_mc_from_other[]','required'=>true]); ?></div>
+            <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Arrival Airport','name'=>'tqs_mc_to[]','id'=>'tqs_mc_to_'.$i,'airports'=>$airports,'selected'=>sanitize_text_field($mct[$i]??''),'other_val'=>sanitize_text_field($mcto[$i]??''),'other_name'=>'tqs_mc_to_other[]','required'=>true]); ?></div>
           </div>
           <div class="tqs-row tqs-mc-dates-row">
-            <div class="tqs-field tqs-field--date"><label>Departure Date <span class="required">*</span></label><input type="date" name="tqs_mc_dep_date[]" class="tqs-mc-dep-date" value="<?php echo esc_attr($mcd[$i]??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" onchange="tqsValidateLegDates(this)" /></div>
+            <div class="tqs-field tqs-field--date"><label>Departure Date <span class="required">*</span></label><input type="date" name="tqs_mc_dep_date[]" class="tqs-mc-dep-date" value="<?php echo esc_attr($mcd[$i]??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" onchange="tqsValidateLegDates(this)" required /></div>
             <div class="tqs-field tqs-field--date"><label>Arrival Date <span class="required">*</span></label><input type="date" name="tqs_mc_arr_date[]" class="tqs-mc-arr-date" value="<?php echo esc_attr($mca[$i]??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" onchange="tqsValidateLegDates(this)" /></div>
             <div class="tqs-leg-date-error" style="display:none;">Arrival date must be on or after departure date.</div>
           </div>
@@ -987,10 +1047,15 @@ function tqs_render_form() {
     <!-- TRIP PREFERENCES -->
     <div class="tqs-form-section"><h3>Trip Preferences</h3>
       <div class="tqs-row">
-        <div class="tqs-field"><label for="tqs_trip_type">Trip Category</label>
-          <select id="tqs_trip_type" name="tqs_trip_type"><option value="">-- Select --</option>
+        <div class="tqs-field"><label for="tqs_trip_type">Trip Category <span class="required">*</span></label>
+          <select id="tqs_trip_type" name="tqs_trip_type" required><option value="">-- Select --</option>
             <?php $stt=sanitize_text_field($_POST['tqs_trip_type']??'');
             foreach(['Leisure / Holiday','Honeymoon','Family Trip','Adventure','Business Travel','Group Tour','Solo Travel','Pilgrimage'] as $t) printf('<option value="%s"%s>%s</option>',esc_attr($t),selected($stt,$t,false),esc_html($t)); ?>
+          </select></div>
+        <div class="tqs-field"><label for="tqs_cabin">Cabin Class <span class="required">*</span></label>
+          <select id="tqs_cabin" name="tqs_cabin" required><option value="">-- Select Cabin --</option>
+            <?php $scb=sanitize_text_field($_POST['tqs_cabin']??'');
+            foreach(['Economy','Premium Economy','Business','First Class'] as $c) printf('<option value="%s"%s>%s</option>',esc_attr($c),selected($scb,$c,false),esc_html($c)); ?>
           </select></div>
         <div class="tqs-field"><label for="tqs_budget">Approximate Budget (per person)</label>
           <select id="tqs_budget" name="tqs_budget"><option value="">-- Select --</option>
@@ -1069,15 +1134,15 @@ function tqs_send_inquiry_email(
     $from, $from_other, $destination, $dest_other,
     $return_from, $return_from_other, $return_dest, $return_dest_other,
     $travel_date, $return_dep, $return_arr, $mc_legs,
-    $adults, $kids, $infants, $trip_type, $budget, $services,
+    $adults, $kids, $infants, $trip_type, $cabin, $budget, $services,
     $quick_requests, $message
 ) {
     // FIX: removed duplicate $to=$to= assignment
-    $to = get_option( 'tqs_admin_email', get_option( 'admin_email' ) );
+    $to = get_option( 'tqs_admin_email', TQS_INQUIRY_DEFAULT_EMAIL );
     $total=$adults+$kids+$infants;
     $labels=['oneway'=>'One Way','return'=>'Return','multicity'=>'Multi-City'];
     $type_label=$labels[$travel_type]??ucfirst($travel_type);
-    $subject='New '.$type_label.' Travel Inquiry from '.$full_name.' - TQS Travels';
+    $subject='New '.$type_label.' Travel Inquiry - '.$full_name.' | '.$full_phone.' - TQS Travels';
     $bc=['oneway'=>'#2980b9','return'=>'#27ae60','multicity'=>'#8e44ad'];
     $badge_color=$bc[$travel_type]??'#555';
 
@@ -1114,7 +1179,7 @@ function tqs_send_inquiry_email(
     $ph.="<tr style='background:#e8f4fd;border-top:2px solid #1a0a2e;'><td colspan='2' style='padding:10px 14px;font-weight:bold;color:#1a0a2e;'>Total Passengers</td><td style='padding:10px 14px;text-align:center;font-size:1.2em;font-weight:bold;color:#1a0a2e;'>".intval($total)."</td></tr></tbody></table>";
     $b.="<div style='margin-bottom:20px;'><h4 style='color:#1a0a2e;margin:0 0 8px;font-size:1em;border-bottom:2px solid #c724b1;padding-bottom:6px;letter-spacing:.06em;text-transform:uppercase;'>Passengers</h4>{$ph}</div>";
     $sl=!empty($services)?implode(', ',array_map('esc_html',$services)):'None specified';
-    $b.=tqs_email_section('Trip Preferences',['Trip Category'=>esc_html($trip_type)?:'N/A','Budget (per person)'=>esc_html($budget)?:'N/A','Services Needed'=>$sl]);
+    $b.=tqs_email_section('Trip Preferences',['Trip Category'=>esc_html($trip_type)?:'N/A','Cabin Class'=>esc_html($cabin)?:'N/A','Budget (per person)'=>esc_html($budget)?:'N/A','Services Needed'=>$sl]);
     if(!empty($quick_requests)||!empty($message)){
         $b.="<div style='margin-bottom:20px;'><h4 style='color:#1a0a2e;margin:0 0 10px;font-size:1em;border-bottom:2px solid #c724b1;padding-bottom:6px;letter-spacing:.06em;text-transform:uppercase;'>Special Requests and Comments</h4>";
         if(!empty($quick_requests)){$b.="<div style='margin-bottom:12px;'><p style='margin:0 0 8px;font-weight:bold;color:#444;font-size:.88em;text-transform:uppercase;letter-spacing:.05em;'>Quick Requests:</p><div style='display:flex;flex-wrap:wrap;gap:8px;'>";foreach($quick_requests as $qr){$b.="<span style='background:#e8f4fd;color:#1a0a2e;padding:5px 12px;border-radius:20px;font-size:.88em;font-weight:600;border:1px solid #b3d4f0;'>".esc_html($qr)."</span>";}$b.="</div></div>";}
