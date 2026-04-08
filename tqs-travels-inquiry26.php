@@ -44,9 +44,9 @@ function tqs_output_css() { ?>
 .tqs-field label{font-weight:700;font-size:.82em;color:var(--accent);margin-bottom:6px;display:block;text-transform:uppercase;letter-spacing:.07em;}
 .tqs-row{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:14px;}
 .tqs-field{flex:1;min-width:200px;display:flex;flex-direction:column;margin-bottom:10px;}
-.tqs-field input[type=text],.tqs-field input[type=email],.tqs-field input[type=tel],.tqs-field input[type=date],.tqs-field input[type=number],.tqs-field select:not(.tqs-airport-select):not(.tqs-dial-select),.tqs-field textarea,.tqs-phone-number,.tqs-comments-box{padding:10px 14px;background:var(--bg-input);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:.97em;font-family:'Nunito',sans-serif;width:100%;box-sizing:border-box;transition:border-color .2s,box-shadow .2s,background .2s;}
-.tqs-field input::placeholder,.tqs-phone-number::placeholder,.tqs-comments-box::placeholder{color:var(--text-muted);font-style:italic;}
-.tqs-field input:focus,.tqs-field select:focus,.tqs-field textarea:focus,.tqs-phone-number:focus,.tqs-comments-box:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow);background:#3a1a60;}
+.tqs-field input[type=text],.tqs-field input[type=email],.tqs-field input[type=tel],.tqs-field input[type=date],.tqs-field input[type=number],.tqs-field select:not(.tqs-airport-select):not(.tqs-dial-select),.tqs-field textarea,.tqs-phone-number{padding:10px 14px;background:var(--bg-input);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:.97em;font-family:'Nunito',sans-serif;width:100%;box-sizing:border-box;transition:border-color .2s,box-shadow .2s,background .2s;}
+.tqs-field input::placeholder,.tqs-phone-number::placeholder{color:var(--text-muted);font-style:italic;}
+.tqs-field input:focus,.tqs-field select:focus,.tqs-field textarea:focus,.tqs-phone-number:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow);background:#3a1a60;}
 .tqs-field input[type=date]::-webkit-calendar-picker-indicator{filter:invert(.8) sepia(1) saturate(3) hue-rotate(260deg);cursor:pointer;}
 .required{color:var(--primary);}
 .tqs-optional-tag{background:rgba(199,36,177,.15);color:var(--accent);font-size:.7em;font-weight:700;padding:2px 9px;border-radius:10px;letter-spacing:.05em;text-transform:uppercase;vertical-align:middle;margin-left:6px;border:1px solid var(--border);}
@@ -125,13 +125,6 @@ function tqs_output_css() { ?>
 .tqs-checkbox-label:has(input:checked){color:var(--accent-light);font-weight:700!important;}
 /* Return date error */
 .tqs-return-date-error{display:flex;align-items:center;gap:6px;background:rgba(255,77,109,.12);border:1px solid var(--error);border-left:5px solid var(--error);color:#ff8fa3;padding:10px 16px;border-radius:6px;margin-top:6px;font-size:.9em;font-weight:600;}
-/* Comments */
-.tqs-comments-grid{display:flex;flex-direction:column;gap:20px;}
-.tqs-comments-box{background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:.97em;padding:12px 14px;width:100%;box-sizing:border-box;resize:vertical;min-height:130px;line-height:1.6;}
-.tqs-comments-box:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow);background:#3a1a60;}
-.tqs-char-counter{text-align:right;font-size:.79em;color:var(--text-muted);margin-top:4px;}
-.tqs-char-counter.warn{color:#ffb300;font-weight:700;}
-.tqs-char-counter.over{color:var(--error);font-weight:700;}
 /* Submit */
 .tqs-submit-row{text-align:center;margin-top:14px;}
 .tqs-submit-btn{background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:#fff;border:none;padding:15px 52px;font-family:'Rajdhani',sans-serif;font-size:1.1em;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-radius:9px;cursor:pointer;box-shadow:0 0 22px var(--primary-glow);transition:all .15s ease;}
@@ -170,8 +163,7 @@ function tqs_output_css() { ?>
 .tqs-field input[type=number],
 .tqs-field select:not(.tqs-airport-select):not(.tqs-dial-select),
 .tqs-field textarea,
-.tqs-phone-number,
-.tqs-comments-box{font-size:.90em;padding:9px 12px;}
+.tqs-phone-number{font-size:.90em;padding:9px 12px;}
 .tqs-type-label{font-size:.92em;}
 .tqs-pax-type{font-size:.92em;}
 .tqs-pax-count{font-size:1.25em;}
@@ -383,14 +375,6 @@ function reNumberLegs(){
   legCount=document.querySelectorAll('.tqs-mc-leg').length;
 }
 
-/* ---- CHAR COUNTER ---- */
-function initCharCounter(){
-  var ta=document.getElementById('tqs_message'),ct=document.getElementById('tqs-char-count');
-  if(!ta||!ct)return;var mx=1000;
-  function upd(){var l=ta.value.length;if(l>mx){ta.value=ta.value.substring(0,mx);l=mx;}ct.textContent=l;var w=ct.closest('.tqs-char-counter');if(w){w.classList.remove('warn','over');if(l>=mx)w.classList.add('over');else if(l>=mx*.85)w.classList.add('warn');}}
-  ta.addEventListener('input',upd);upd();
-}
-
 /* ---- FORM GUARD ---- */
 function initFormGuard(){
   var form=document.getElementById('tqs-main-form');if(!form)return;
@@ -418,7 +402,7 @@ function initFormGuard(){
 /* ---- BOOT ---- */
 document.addEventListener('DOMContentLoaded',function(){
   initPaxCounts();initTravelTypeSwitcher();initAirportSearch();
-  initLegCount();initFormGuard();initPhoneFields();initDialSelects();initCharCounter();
+  initLegCount();initFormGuard();initPhoneFields();initDialSelects();
 });
 })();
 </script>
@@ -751,9 +735,6 @@ function tqs_render_inquiry_form() {
             $full_whatsapp = $wa_same ? $full_phone : ( $final_wa_code . $wa_digits );
 
             $travel_type    = sanitize_text_field( wp_unslash( $_POST['tqs_travel_type'] ?? '' ) );
-            $trip_type      = sanitize_text_field( wp_unslash( $_POST['tqs_trip_type']   ?? '' ) );
-            $quick_requests = isset( $_POST['tqs_quick_requests'] ) ? array_map( 'sanitize_text_field', array_map( 'wp_unslash', (array) $_POST['tqs_quick_requests'] ) ) : [];
-            $message        = sanitize_textarea_field( wp_unslash( $_POST['tqs_message'] ?? '' ) );
 
             $adults  = max( 1, intval( $_POST['tqs_adults']  ?? 1 ) );
             $kids    = max( 0, intval( $_POST['tqs_kids']    ?? 0 ) );
@@ -823,8 +804,7 @@ function tqs_render_inquiry_form() {
                     $from, $from_other, $destination, $dest_other,
                     $return_from, $return_from_other, $return_dest, $return_dest_other,
                     $travel_date, $return_dep, $return_arr, $mc_legs,
-                    $adults, $kids, $infants, $trip_type,
-                    $quick_requests, $message
+                    $adults, $kids, $infants
                 );
             }
         }
@@ -1002,37 +982,6 @@ function tqs_render_form() {
       <div class="tqs-pax-error" id="tqs-pax-error" style="display:none;"></div>
     </div>
 
-    <!-- TRIP PREFERENCES -->
-    <div class="tqs-form-section"><h3>Trip Preferences</h3>
-      <div class="tqs-row">
-        <div class="tqs-field"><label for="tqs_trip_type">Trip Category</label>
-          <select id="tqs_trip_type" name="tqs_trip_type"><option value="">-- Select --</option>
-            <?php $stt=sanitize_text_field($_POST['tqs_trip_type']??'');
-            foreach(['Leisure / Holiday','Honeymoon','Family Trip','Adventure','Business Travel','Group Tour','Solo Travel','Pilgrimage'] as $t) printf('<option value="%s"%s>%s</option>',esc_attr($t),selected($stt,$t,false),esc_html($t)); ?>
-          </select></div>
-      </div>
-    </div>
-
-    <!-- SPECIAL REQUESTS -->
-    <div class="tqs-form-section"><h3>Special Requests and Comments</h3>
-      <p class="tqs-hint">Let us know anything specific - we will do our best to accommodate your needs.</p>
-      <div class="tqs-comments-grid">
-        <div class="tqs-field tqs-checkboxes"><label>Quick Requests <span class="tqs-optional-tag">optional</span></label>
-          <div class="tqs-checkbox-grid">
-            <?php $sqr=(array)($_POST['tqs_quick_requests']??[]);
-            foreach(['Vegetarian / Vegan Meal','Halal Meal','Baby / Infant Meal','Wheelchair Assistance','Extra Legroom Seat','Window Seat Preferred','Hotel Recommendation Needed','Airport Transfer Required','Visa Assistance Required','Special Occasion (Birthday / Anniversary)','Travelling with Medical Equipment','Travelling with Pet'] as $qr): $chk=in_array($qr,$sqr,true)?'checked':''; ?>
-            <label class="tqs-checkbox-label"><input type="checkbox" name="tqs_quick_requests[]" value="<?php echo esc_attr($qr); ?>" <?php echo $chk; ?>><?php echo esc_html($qr); ?></label>
-            <?php endforeach; ?>
-          </div>
-        </div>
-        <div class="tqs-field">
-          <label for="tqs_message">Additional Comments / Special Requests <span class="tqs-optional-tag">optional</span></label>
-          <textarea id="tqs_message" name="tqs_message" rows="6" class="tqs-comments-box" placeholder="e.g. We are celebrating our honeymoon and would love a window seat..."><?php echo esc_textarea($_POST['tqs_message']??''); ?></textarea>
-          <div class="tqs-char-counter"><span id="tqs-char-count">0</span> / 1000 characters</div>
-        </div>
-      </div>
-    </div>
-
     <div class="tqs-submit-row">
       <button type="submit" name="tqs_submit" class="tqs-submit-btn">Send My Travel Inquiry</button>
     </div>
@@ -1074,8 +1023,7 @@ function tqs_send_inquiry_email(
     $from, $from_other, $destination, $dest_other,
     $return_from, $return_from_other, $return_dest, $return_dest_other,
     $travel_date, $return_dep, $return_arr, $mc_legs,
-    $adults, $kids, $infants, $trip_type,
-    $quick_requests, $message
+    $adults, $kids, $infants
 ) {
     // FIX: removed duplicate $to=$to= assignment
     $to = get_option( 'tqs_admin_email', get_option( 'admin_email' ) );
@@ -1118,13 +1066,6 @@ function tqs_send_inquiry_email(
     foreach([['Adults','12+ years',$adults],['Children','2 - 11 years',$kids],['Infants','Under 2 years',$infants]] as $ri=>$row){$bg=$ri%2===0?'#f9f9f9':'#fff';$ph.="<tr style='background:{$bg};'><td style='padding:10px 14px;font-weight:bold;'>".esc_html($row[0])."</td><td style='padding:10px 14px;color:#666;'>".esc_html($row[1])."</td><td style='padding:10px 14px;text-align:center;font-size:1.1em;font-weight:bold;color:#1a0a2e;'>".intval($row[2])."</td></tr>";}
     $ph.="<tr style='background:#e8f4fd;border-top:2px solid #1a0a2e;'><td colspan='2' style='padding:10px 14px;font-weight:bold;color:#1a0a2e;'>Total Passengers</td><td style='padding:10px 14px;text-align:center;font-size:1.2em;font-weight:bold;color:#1a0a2e;'>".intval($total)."</td></tr></tbody></table>";
     $b.="<div style='margin-bottom:20px;'><h4 style='color:#1a0a2e;margin:0 0 8px;font-size:1em;border-bottom:2px solid #c724b1;padding-bottom:6px;letter-spacing:.06em;text-transform:uppercase;'>Passengers</h4>{$ph}</div>";
-    $b.=tqs_email_section('Trip Preferences',['Trip Category'=>esc_html($trip_type)?:'N/A']);
-    if(!empty($quick_requests)||!empty($message)){
-        $b.="<div style='margin-bottom:20px;'><h4 style='color:#1a0a2e;margin:0 0 10px;font-size:1em;border-bottom:2px solid #c724b1;padding-bottom:6px;letter-spacing:.06em;text-transform:uppercase;'>Special Requests and Comments</h4>";
-        if(!empty($quick_requests)){$b.="<div style='margin-bottom:12px;'><p style='margin:0 0 8px;font-weight:bold;color:#444;font-size:.88em;text-transform:uppercase;letter-spacing:.05em;'>Quick Requests:</p><div style='display:flex;flex-wrap:wrap;gap:8px;'>";foreach($quick_requests as $qr){$b.="<span style='background:#e8f4fd;color:#1a0a2e;padding:5px 12px;border-radius:20px;font-size:.88em;font-weight:600;border:1px solid #b3d4f0;'>".esc_html($qr)."</span>";}$b.="</div></div>";}
-        if(!empty($message)){$b.="<div style='background:#f0f7ff;border-left:4px solid #c724b1;border-radius:0 6px 6px 0;padding:14px 16px;'><p style='margin:0 0 4px;font-weight:bold;color:#1a0a2e;font-size:.88em;text-transform:uppercase;letter-spacing:.05em;'>Comments:</p><p style='margin:0;line-height:1.6;color:#333;'>".nl2br(esc_html($message))."</p></div>";}
-        $b.="</div>";
-    }
     $b.="</div><div style='background:#1a0a2e;padding:14px;text-align:center;font-size:12px;color:#a87bc0;letter-spacing:.05em;'>Submitted via TQS Travels website inquiry form</div></div></body></html>";
     $headers=['Content-Type: text/html; charset=UTF-8','Reply-To: '.$full_name.' <'.$email.'>'];
     return wp_mail($to,$subject,$b,$headers);
