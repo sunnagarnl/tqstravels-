@@ -429,7 +429,7 @@ function initFormGuard(){
     if(pax.adults<1){showPaxError('At least 1 adult (12+) is required.');blocked=true;}
     else if(tot>MAX_TOTAL){showPaxError('Total passengers cannot exceed '+MAX_TOTAL+'. You selected '+tot+'.');blocked=true;}
     else if(pax.infants>pax.adults){showPaxError('Infants ('+pax.infants+') cannot exceed adults ('+pax.adults+').');blocked=true;}
-    var at=document.querySelector('input[name="tqs_travel_type"]:checked');
+    at=document.querySelector('input[name="tqs_travel_type"]:checked');
     if(at&&at.value==='return'){
       var di=document.getElementById('tqs_travel_date_return'),ai=document.getElementById('tqs_return_date'),ee=document.getElementById('tqs-return-date-error');
       if(di&&ai&&di.value&&ai.value&&ai.value<=di.value){if(ee){ee.textContent='Return date must be after the departure date.';ee.style.display='flex';}if(ai){ai.style.borderColor='var(--error)';ai.style.boxShadow='0 0 0 3px rgba(231,76,60,.18)';}blocked=true;}
@@ -786,7 +786,7 @@ function tqs_render_inquiry_form() {
             $quick_requests = isset( $_POST['tqs_quick_requests'] ) ? array_map( 'sanitize_text_field', array_map( 'wp_unslash', (array) $_POST['tqs_quick_requests'] ) ) : [];
             $message        = sanitize_textarea_field( wp_unslash( $_POST['tqs_message'] ?? '' ) );
 
-            $adults  = max( 1, intval( $_POST['tqs_adults']  ?? 1 ) );
+            $adults  = intval( $_POST['tqs_adults']  ?? 0 );
             $kids    = max( 0, intval( $_POST['tqs_kids']    ?? 0 ) );
             $infants = max( 0, intval( $_POST['tqs_infants'] ?? 0 ) );
             $total   = $adults + $kids + $infants;
@@ -1208,8 +1208,8 @@ function tqs_render_settings_page(){ ?>
 <div class="wrap"><h1>TQS Travels - Inquiry Form Settings</h1>
 <form method="post" action="options.php"><?php settings_fields('tqs_settings_group'); ?>
 <table class="form-table"><tr><th scope="row"><label for="tqs_admin_email">Inquiry Recipient Email</label></th>
-<td><input type="email" id="tqs_admin_email" name="tqs_admin_email" value="<?php echo esc_attr(get_option('tqs_admin_email',get_option('admin_email'))); ?>" class="regular-text" />
-<p class="description">All form submissions will be sent to this address.</p></td></tr></table>
+<td><input type="email" id="tqs_admin_email" name="tqs_admin_email" value="<?php echo esc_attr(get_option('tqs_admin_email', TQS_INQUIRY_DEFAULT_EMAIL)); ?>" class="regular-text" />
+<p class="description">All form submissions will be sent to this address. Default: <?php echo esc_html(TQS_INQUIRY_DEFAULT_EMAIL); ?></p></td></tr></table>
 <?php submit_button(); ?></form><hr>
 <h2>How to use</h2><p>Add the shortcode <code>[tqs_inquiry_form]</code> to any page or post.</p></div>
 <?php }
