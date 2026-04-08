@@ -156,6 +156,26 @@ function tqs_output_css() { ?>
 }
 /* Selects global */
 .tqs-field select:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow);outline:none;background:#3a1a60;}
+/* --- Smaller font sizing overrides --- */
+.tqs-form-wrapper{font-size:14px;}
+.tqs-form-header h2{font-size:1.55em;}
+.tqs-form-header p{font-size:.90em;}
+.tqs-form-section h3{font-size:.95em;}
+.tqs-hint{font-size:.82em;}
+.tqs-field label{font-size:.75em;}
+.tqs-field input[type=text],
+.tqs-field input[type=email],
+.tqs-field input[type=tel],
+.tqs-field input[type=date],
+.tqs-field input[type=number],
+.tqs-field select:not(.tqs-airport-select):not(.tqs-dial-select),
+.tqs-field textarea,
+.tqs-phone-number,
+.tqs-comments-box{font-size:.90em;padding:9px 12px;}
+.tqs-type-label{font-size:.92em;}
+.tqs-pax-type{font-size:.92em;}
+.tqs-pax-count{font-size:1.25em;}
+.tqs-submit-btn{font-size:1.00em;padding:13px 46px;}
 </style>
 <?php }
 
@@ -732,8 +752,6 @@ function tqs_render_inquiry_form() {
 
             $travel_type    = sanitize_text_field( wp_unslash( $_POST['tqs_travel_type'] ?? '' ) );
             $trip_type      = sanitize_text_field( wp_unslash( $_POST['tqs_trip_type']   ?? '' ) );
-            $budget         = sanitize_text_field( wp_unslash( $_POST['tqs_budget']      ?? '' ) );
-            $services       = isset( $_POST['tqs_services'] )       ? array_map( 'sanitize_text_field', array_map( 'wp_unslash', (array) $_POST['tqs_services'] ) )       : [];
             $quick_requests = isset( $_POST['tqs_quick_requests'] ) ? array_map( 'sanitize_text_field', array_map( 'wp_unslash', (array) $_POST['tqs_quick_requests'] ) ) : [];
             $message        = sanitize_textarea_field( wp_unslash( $_POST['tqs_message'] ?? '' ) );
 
@@ -805,7 +823,7 @@ function tqs_render_inquiry_form() {
                     $from, $from_other, $destination, $dest_other,
                     $return_from, $return_from_other, $return_dest, $return_dest_other,
                     $travel_date, $return_dep, $return_arr, $mc_legs,
-                    $adults, $kids, $infants, $trip_type, $budget, $services,
+                    $adults, $kids, $infants, $trip_type,
                     $quick_requests, $message
                 );
             }
@@ -992,19 +1010,6 @@ function tqs_render_form() {
             <?php $stt=sanitize_text_field($_POST['tqs_trip_type']??'');
             foreach(['Leisure / Holiday','Honeymoon','Family Trip','Adventure','Business Travel','Group Tour','Solo Travel','Pilgrimage'] as $t) printf('<option value="%s"%s>%s</option>',esc_attr($t),selected($stt,$t,false),esc_html($t)); ?>
           </select></div>
-        <div class="tqs-field"><label for="tqs_budget">Approximate Budget (per person)</label>
-          <select id="tqs_budget" name="tqs_budget"><option value="">-- Select --</option>
-            <?php $sb=sanitize_text_field($_POST['tqs_budget']??'');
-            foreach(['Under $500','$500 - $1,000','$1,000 - $2,500','$2,500 - $5,000','$5,000 - $10,000','$10,000+','Flexible'] as $b) printf('<option value="%s"%s>%s</option>',esc_attr($b),selected($sb,$b,false),esc_html($b)); ?>
-          </select></div>
-      </div>
-      <div class="tqs-field tqs-checkboxes"><label>Services Required</label>
-        <div class="tqs-checkbox-grid">
-          <?php $ss=(array)($_POST['tqs_services']??[]);
-          foreach(['Flight Booking','Hotel / Accommodation','Airport Transfer','Car Rental','Tour Guide','Travel Insurance','Visa Assistance','Cruise Booking','All-Inclusive Package'] as $s): $chk=in_array($s,$ss,true)?'checked':''; ?>
-          <label class="tqs-checkbox-label"><input type="checkbox" name="tqs_services[]" value="<?php echo esc_attr($s); ?>" <?php echo $chk; ?>><?php echo esc_html($s); ?></label>
-          <?php endforeach; ?>
-        </div>
       </div>
     </div>
 
@@ -1069,7 +1074,7 @@ function tqs_send_inquiry_email(
     $from, $from_other, $destination, $dest_other,
     $return_from, $return_from_other, $return_dest, $return_dest_other,
     $travel_date, $return_dep, $return_arr, $mc_legs,
-    $adults, $kids, $infants, $trip_type, $budget, $services,
+    $adults, $kids, $infants, $trip_type,
     $quick_requests, $message
 ) {
     // FIX: removed duplicate $to=$to= assignment
@@ -1113,8 +1118,7 @@ function tqs_send_inquiry_email(
     foreach([['Adults','12+ years',$adults],['Children','2 - 11 years',$kids],['Infants','Under 2 years',$infants]] as $ri=>$row){$bg=$ri%2===0?'#f9f9f9':'#fff';$ph.="<tr style='background:{$bg};'><td style='padding:10px 14px;font-weight:bold;'>".esc_html($row[0])."</td><td style='padding:10px 14px;color:#666;'>".esc_html($row[1])."</td><td style='padding:10px 14px;text-align:center;font-size:1.1em;font-weight:bold;color:#1a0a2e;'>".intval($row[2])."</td></tr>";}
     $ph.="<tr style='background:#e8f4fd;border-top:2px solid #1a0a2e;'><td colspan='2' style='padding:10px 14px;font-weight:bold;color:#1a0a2e;'>Total Passengers</td><td style='padding:10px 14px;text-align:center;font-size:1.2em;font-weight:bold;color:#1a0a2e;'>".intval($total)."</td></tr></tbody></table>";
     $b.="<div style='margin-bottom:20px;'><h4 style='color:#1a0a2e;margin:0 0 8px;font-size:1em;border-bottom:2px solid #c724b1;padding-bottom:6px;letter-spacing:.06em;text-transform:uppercase;'>Passengers</h4>{$ph}</div>";
-    $sl=!empty($services)?implode(', ',array_map('esc_html',$services)):'None specified';
-    $b.=tqs_email_section('Trip Preferences',['Trip Category'=>esc_html($trip_type)?:'N/A','Budget (per person)'=>esc_html($budget)?:'N/A','Services Needed'=>$sl]);
+    $b.=tqs_email_section('Trip Preferences',['Trip Category'=>esc_html($trip_type)?:'N/A']);
     if(!empty($quick_requests)||!empty($message)){
         $b.="<div style='margin-bottom:20px;'><h4 style='color:#1a0a2e;margin:0 0 10px;font-size:1em;border-bottom:2px solid #c724b1;padding-bottom:6px;letter-spacing:.06em;text-transform:uppercase;'>Special Requests and Comments</h4>";
         if(!empty($quick_requests)){$b.="<div style='margin-bottom:12px;'><p style='margin:0 0 8px;font-weight:bold;color:#444;font-size:.88em;text-transform:uppercase;letter-spacing:.05em;'>Quick Requests:</p><div style='display:flex;flex-wrap:wrap;gap:8px;'>";foreach($quick_requests as $qr){$b.="<span style='background:#e8f4fd;color:#1a0a2e;padding:5px 12px;border-radius:20px;font-size:.88em;font-weight:600;border:1px solid #b3d4f0;'>".esc_html($qr)."</span>";}$b.="</div></div>";}
