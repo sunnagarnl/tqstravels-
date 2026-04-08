@@ -1164,8 +1164,9 @@ function tqs_send_inquiry_email(
     $b.="<div style='text-align:center;margin-bottom:20px;'><span style='background:".esc_attr($badge_color).";color:#fff;padding:6px 22px;border-radius:20px;font-size:.93em;font-weight:bold;letter-spacing:.08em;text-transform:uppercase;'>".esc_html($type_label)."</span></div>";
     $b.=tqs_email_section('Personal Information',['Full Name'=>esc_html($full_name),'Email'=>esc_html($email),'Phone'=>esc_html($full_phone),'WhatsApp'=>$wa_display]);
     if(in_array($travel_type,['oneway','return'],true)){
-        $r=['From'=>esc_html($from_display)?:'N/A','To'=>esc_html($dest_display),'Departure Date'=>esc_html($travel_date)];
-        if($travel_type==='return'){$r['Return Departure Date']=esc_html($return_dep);$r['Return Date']=esc_html($return_arr);}
+        $dep_date = $travel_type === 'return' ? $return_dep : $travel_date;
+        $r=['From'=>esc_html($from_display)?:'N/A','To'=>esc_html($dest_display),'Departure Date'=>esc_html($dep_date)];
+        if($travel_type==='return'){$r['Return Date']=esc_html($return_arr);}
         $b.=tqs_email_section('Route Details',$r);
     }
     if($travel_type==='multicity'&&!empty($mc_legs)){
