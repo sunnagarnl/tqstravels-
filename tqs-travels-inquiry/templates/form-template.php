@@ -400,7 +400,6 @@ function tqs_render_airport_field( $args ) {
     ?>
     <label for="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $label ); ?> <?php echo $req_star; ?></label>
     <div class="tqs-airport-wrap">
-        <input type="text" class="tqs-airport-search" placeholder="Search airport or city..." aria-label="Search airports" />
         <select name="<?php echo esc_attr( $name ); ?>"
                 id="<?php echo esc_attr( $id ); ?>"
                 class="tqs-airport-select"

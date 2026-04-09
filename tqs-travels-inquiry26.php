@@ -63,10 +63,7 @@ function tqs_output_css() { ?>
 .tqs-type-section{display:none;}
 /* Airport field */
 .tqs-airport-wrap{display:flex;flex-direction:column;gap:0;width:100%;}
-.tqs-airport-search{padding:9px 13px;background:#3a1a60;border:1px solid var(--border);border-bottom:none;border-radius:7px 7px 0 0;color:var(--text);font-size:.9em;font-family:'Nunito',sans-serif;width:100%;box-sizing:border-box;transition:border-color .2s,box-shadow .2s;}
-.tqs-airport-search::placeholder{color:var(--text-muted);font-style:italic;}
-.tqs-airport-search:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow);}
-.tqs-airport-select{padding:10px 13px;background:var(--bg-input);border:1px solid var(--border);border-radius:0 0 7px 7px;color:var(--text);font-size:.95em;font-family:'Nunito',sans-serif;width:100%;box-sizing:border-box;transition:border-color .2s,box-shadow .2s;cursor:pointer;}
+.tqs-airport-select{padding:10px 13px;background:var(--bg-input);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:.95em;font-family:'Nunito',sans-serif;width:100%;box-sizing:border-box;transition:border-color .2s,box-shadow .2s;cursor:pointer;}
 .tqs-airport-select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow);background:#3a1a60;}
 .tqs-airport-select option,.tqs-airport-select optgroup{background:#23103d;color:var(--text);}
 .tqs-airport-other{margin-top:7px;padding:10px 13px;background:var(--bg-input);border:2px dashed var(--primary);border-radius:7px;color:var(--text);font-size:.95em;font-family:'Nunito',sans-serif;width:100%;box-sizing:border-box;}
@@ -249,25 +246,7 @@ window.tqsToggleOther=function(sel){
   else{oi.style.display='none';oi.removeAttribute('required');oi.value='';}
 };
 
-/* ---- AIRPORT SEARCH ---- */
-function initSearchOnSelect(sel){
-  var wrap=sel.closest('.tqs-airport-wrap');if(!wrap)return;
-  var si=wrap.querySelector('.tqs-airport-search');if(!si)return;
-  var ogs=Array.from(sel.querySelectorAll('optgroup'));
-  si.addEventListener('input',function(){
-    var q=this.value.toLowerCase().trim();
-    if(!q){ogs.forEach(function(g){g.style.display='';g.querySelectorAll('option').forEach(function(o){o.style.display='';});});return;}
-    ogs.forEach(function(g){
-      var any=false;
-      g.querySelectorAll('option').forEach(function(o){
-        if(o.value===''||o.value==='other'||o.textContent.toLowerCase().includes(q)){o.style.display='';if(o.value!==''&&o.value!=='other')any=true;}
-        else o.style.display='none';
-      });
-      g.style.display=any?'':'none';
-    });
-  });
-}
-function initAirportSearch(){document.querySelectorAll('.tqs-airport-select').forEach(initSearchOnSelect);}
+
 
 /* ---- PHONE ---- */
 function initPhoneFields(){
@@ -355,11 +334,10 @@ window.tqsAddLeg=function(){
   var oh=es?es.innerHTML:'<option value="">-- Select Airport --</option>';
   var div=document.createElement('div');div.className='tqs-mc-leg';div.dataset.leg=legCount-1;
   div.innerHTML='<div class="tqs-mc-leg-header"><span class="tqs-leg-badge">Leg '+legCount+'</span><button type="button" class="tqs-remove-leg" onclick="tqsRemoveLeg(this)">Remove</button></div>'
-    +'<div class="tqs-row"><div class="tqs-field"><label>Departure Airport</label><div class="tqs-airport-wrap"><input type="text" class="tqs-airport-search" placeholder="Search airport or city..." /><select name="tqs_mc_from[]" class="tqs-airport-select" onchange="tqsToggleOther(this)">'+oh+'</select><input type="text" name="tqs_mc_from_other[]" class="tqs-airport-other" placeholder="Enter airport name, city or IATA code" style="display:none;" /></div></div>'
-    +'<div class="tqs-field"><label>Arrival Airport</label><div class="tqs-airport-wrap"><input type="text" class="tqs-airport-search" placeholder="Search airport or city..." /><select name="tqs_mc_to[]" class="tqs-airport-select" onchange="tqsToggleOther(this)">'+oh+'</select><input type="text" name="tqs_mc_to_other[]" class="tqs-airport-other" placeholder="Enter airport name, city or IATA code" style="display:none;" /></div></div></div>'
+    +'<div class="tqs-row"><div class="tqs-field"><label>Departure Airport</label><div class="tqs-airport-wrap"><select name="tqs_mc_from[]" class="tqs-airport-select" onchange="tqsToggleOther(this)">'+oh+'</select><input type="text" name="tqs_mc_from_other[]" class="tqs-airport-other" placeholder="Enter airport name, city or IATA code" style="display:none;" /></div></div>'
+    +'<div class="tqs-field"><label>Arrival Airport</label><div class="tqs-airport-wrap"><select name="tqs_mc_to[]" class="tqs-airport-select" onchange="tqsToggleOther(this)">'+oh+'</select><input type="text" name="tqs_mc_to_other[]" class="tqs-airport-other" placeholder="Enter airport name, city or IATA code" style="display:none;" /></div></div></div>'
     +'<div class="tqs-row tqs-mc-dates-row"><div class="tqs-field tqs-field--date"><label>Departure Date <span class="required">*</span></label><input type="date" name="tqs_mc_dep_date[]" class="tqs-mc-dep-date" min="'+today+'" onchange="tqsValidateLegDates(this)" /></div><div class="tqs-field tqs-field--date"><label>Arrival Date <span class="required">*</span></label><input type="date" name="tqs_mc_arr_date[]" class="tqs-mc-arr-date" min="'+today+'" onchange="tqsValidateLegDates(this)" /></div><div class="tqs-leg-date-error" style="display:none;">Arrival date must be on or after departure date.</div></div>';
   container.appendChild(div);reNumberLegs();
-  div.querySelectorAll('.tqs-airport-select').forEach(initSearchOnSelect);
   div.scrollIntoView({behavior:'smooth',block:'center'});
 };
 window.tqsRemoveLeg=function(btn){
@@ -401,7 +379,7 @@ function initFormGuard(){
 
 /* ---- BOOT ---- */
 document.addEventListener('DOMContentLoaded',function(){
-  initPaxCounts();initTravelTypeSwitcher();initAirportSearch();
+  initPaxCounts();initTravelTypeSwitcher();
   initLegCount();initFormGuard();initPhoneFields();initDialSelects();
 });
 })();
@@ -1003,7 +981,6 @@ function tqs_render_airport_field( $args ) {
     ?>
     <label for="<?php echo esc_attr($id); ?>"><?php echo esc_html($label); ?> <?php echo $req_star; ?></label>
     <div class="tqs-airport-wrap">
-      <input type="text" class="tqs-airport-search" placeholder="Search airport or city..." />
       <select name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($id); ?>" class="tqs-airport-select" onchange="tqsToggleOther(this)" <?php echo $required?'required':''; ?>>
         <option value="">-- Select Airport --</option>
         <?php foreach($top as $country=>$al): ?><optgroup label="<?php echo esc_attr($country); ?>"><?php foreach($al as $code=>$an): ?><option value="<?php echo esc_attr($code); ?>" <?php selected($selected,$code); ?>><?php echo esc_html($an); ?></option><?php endforeach; ?></optgroup><?php endforeach; ?>
