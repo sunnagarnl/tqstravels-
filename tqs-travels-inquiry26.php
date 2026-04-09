@@ -184,6 +184,8 @@ function tqs_output_css() { ?>
 /* Passenger icons */
 .tqs-pax-icon{display:flex;align-items:center;justify-content:center;color:var(--text-muted);flex-shrink:0;min-width:30px;transition:color .2s;}
 .tqs-pax-card.pax-active .tqs-pax-icon{color:var(--accent);}
+/* Comments section */
+.tqs-comments-section{border-bottom:none;}
 </style>
 <?php }
 
@@ -233,6 +235,9 @@ en:{
   err_arr_date_leg:'Arrival date must be on or after departure date.',
   err_phone_digits:'Phone number must be digits only (4-15 digits).',
   err_wa_digits:'WhatsApp number must be digits only (4-15 digits).',
+  section_comments:'Additional Comments',
+  label_comments:'Comments / Special Requests',
+  ph_comments:'Any special requests, preferred airlines, seat preferences, or additional information\u2026',
   success_title:'Thank you for your inquiry!',
   success_body:'Our team at <strong>TQS Travels</strong> will get back to you within 24 hours.'
 },
@@ -273,6 +278,9 @@ nl:{
   err_arr_date_leg:'Aankomstdatum moet op of na de vertrekdatum zijn.',
   err_phone_digits:'Telefoonnummer moet alleen cijfers bevatten (4-15 cijfers).',
   err_wa_digits:'WhatsApp-nummer moet alleen cijfers bevatten (4-15 cijfers).',
+  section_comments:'Aanvullende Opmerkingen',
+  label_comments:'Opmerkingen / Speciale Verzoeken',
+  ph_comments:'Speciale verzoeken, voorkeur luchtvaartmaatschappijen, stoelvoorkeuren of aanvullende informatie\u2026',
   success_title:'Bedankt voor uw aanvraag!',
   success_body:'Ons team bij <strong>TQS Travels</strong> neemt binnen 24 uur contact met u op.'
 }};
@@ -893,6 +901,8 @@ function tqs_render_inquiry_form() {
             $return_dep        = sanitize_text_field( wp_unslash( $_POST['tqs_travel_date_return']        ?? '' ) );
             $return_arr        = sanitize_text_field( wp_unslash( $_POST['tqs_return_date']               ?? '' ) );
 
+            $comments = sanitize_textarea_field( wp_unslash( $_POST['tqs_comments'] ?? '' ) );
+
             $mc_legs = [];
             if ( $travel_type === 'multicity' ) {
                 $mc_froms       = array_map( 'sanitize_text_field', array_map( 'wp_unslash', (array) ( $_POST['tqs_mc_from']       ?? [] ) ) );
@@ -941,7 +951,7 @@ function tqs_render_inquiry_form() {
                     $from, $from_other, $destination, $dest_other,
                     $return_from, $return_from_other, $return_dest, $return_dest_other,
                     $travel_date, $return_dep, $return_arr, $mc_legs,
-                    $adults, $kids, $infants
+                    $adults, $kids, $infants, $comments
                 );
             }
         }
@@ -1130,6 +1140,15 @@ function tqs_render_form() {
       <div class="tqs-pax-error" id="tqs-pax-error" style="display:none;"></div>
     </div>
 
+    <!-- COMMENTS -->
+    <div class="tqs-form-section tqs-comments-section">
+      <h3><span class="tqs-section-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg></span><span data-i18n="section_comments">Additional Comments</span></h3>
+      <div class="tqs-field">
+        <label for="tqs_comments"><span data-i18n="label_comments">Comments / Special Requests</span> <span class="tqs-optional-tag" data-i18n="opt_optional">optional</span></label>
+        <textarea id="tqs_comments" name="tqs_comments" rows="4" data-i18n-ph="ph_comments" placeholder="Any special requests, preferred airlines, seat preferences, or additional information…" style="resize:vertical;min-height:100px;"><?php echo esc_textarea($_POST['tqs_comments']??''); ?></textarea>
+      </div>
+    </div>
+
     <div class="tqs-submit-row">
       <button type="submit" name="tqs_submit" class="tqs-submit-btn" data-i18n="btn_submit">Send My Travel Inquiry</button>
     </div>
@@ -1171,7 +1190,7 @@ function tqs_send_inquiry_email(
     $from, $from_other, $destination, $dest_other,
     $return_from, $return_from_other, $return_dest, $return_dest_other,
     $travel_date, $return_dep, $return_arr, $mc_legs,
-    $adults, $kids, $infants
+    $adults, $kids, $infants, $comments = ''
 ) {
     // FIX: removed duplicate $to=$to= assignment
     $to = get_option( 'tqs_admin_email', get_option( 'admin_email' ) );
@@ -1214,6 +1233,9 @@ function tqs_send_inquiry_email(
     foreach([['Adults','12+ years',$adults],['Children','2 - 11 years',$kids],['Infants','Under 2 years',$infants]] as $ri=>$row){$bg=$ri%2===0?'#f9f9f9':'#fff';$ph.="<tr style='background:{$bg};'><td style='padding:10px 14px;font-weight:bold;'>".esc_html($row[0])."</td><td style='padding:10px 14px;color:#666;'>".esc_html($row[1])."</td><td style='padding:10px 14px;text-align:center;font-size:1.1em;font-weight:bold;color:#1a0a2e;'>".intval($row[2])."</td></tr>";}
     $ph.="<tr style='background:#e8f4fd;border-top:2px solid #1a0a2e;'><td colspan='2' style='padding:10px 14px;font-weight:bold;color:#1a0a2e;'>Total Passengers</td><td style='padding:10px 14px;text-align:center;font-size:1.2em;font-weight:bold;color:#1a0a2e;'>".intval($total)."</td></tr></tbody></table>";
     $b.="<div style='margin-bottom:20px;'><h4 style='color:#1a0a2e;margin:0 0 8px;font-size:1em;border-bottom:2px solid #c724b1;padding-bottom:6px;letter-spacing:.06em;text-transform:uppercase;'>Passengers</h4>{$ph}</div>";
+    if ( !empty($comments) ) {
+        $b.="<div style='margin-bottom:20px;'><h4 style='color:#1a0a2e;margin:0 0 8px;font-size:1em;border-bottom:2px solid #c724b1;padding-bottom:6px;letter-spacing:.06em;text-transform:uppercase;'>Comments / Special Requests</h4><div style='background:#f9f9f9;border:1px solid #e0d0f0;border-left:4px solid #c724b1;border-radius:6px;padding:14px 18px;color:#333;font-size:.95em;line-height:1.6;white-space:pre-wrap;'>".esc_html($comments)."</div></div>";
+    }
     $b.="</div><div style='background:#1a0a2e;padding:14px;text-align:center;font-size:12px;color:#a87bc0;letter-spacing:.05em;'>Submitted via TQS Travels website inquiry form</div></div></body></html>";
     $headers=['Content-Type: text/html; charset=UTF-8','Reply-To: '.$full_name.' <'.$email.'>'];
     return wp_mail($to,$subject,$b,$headers);
