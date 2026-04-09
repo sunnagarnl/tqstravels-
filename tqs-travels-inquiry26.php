@@ -44,9 +44,9 @@ function tqs_output_css() { ?>
 .tqs-field label{font-weight:700;font-size:.82em;color:var(--accent);margin-bottom:6px;display:block;text-transform:uppercase;letter-spacing:.07em;}
 .tqs-row{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:14px;}
 .tqs-field{flex:1;min-width:200px;display:flex;flex-direction:column;margin-bottom:10px;}
-.tqs-field input[type=text],.tqs-field input[type=email],.tqs-field input[type=tel],.tqs-field input[type=date],.tqs-field input[type=number],.tqs-field select:not(.tqs-airport-select):not(.tqs-dial-select),.tqs-field textarea,.tqs-phone-number,.tqs-comments-box{padding:10px 14px;background:var(--bg-input);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:.97em;font-family:'Nunito',sans-serif;width:100%;box-sizing:border-box;transition:border-color .2s,box-shadow .2s,background .2s;}
-.tqs-field input::placeholder,.tqs-phone-number::placeholder,.tqs-comments-box::placeholder{color:var(--text-muted);font-style:italic;}
-.tqs-field input:focus,.tqs-field select:focus,.tqs-field textarea:focus,.tqs-phone-number:focus,.tqs-comments-box:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow);background:#3a1a60;}
+.tqs-field input[type=text],.tqs-field input[type=email],.tqs-field input[type=tel],.tqs-field input[type=date],.tqs-field input[type=number],.tqs-field select:not(.tqs-airport-select):not(.tqs-dial-select),.tqs-field textarea,.tqs-phone-number{padding:10px 14px;background:var(--bg-input);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:.97em;font-family:'Nunito',sans-serif;width:100%;box-sizing:border-box;transition:border-color .2s,box-shadow .2s,background .2s;}
+.tqs-field input::placeholder,.tqs-phone-number::placeholder{color:var(--text-muted);font-style:italic;}
+.tqs-field input:focus,.tqs-field select:focus,.tqs-field textarea:focus,.tqs-phone-number:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow);background:#3a1a60;}
 .tqs-field input[type=date]::-webkit-calendar-picker-indicator{filter:invert(.8) sepia(1) saturate(3) hue-rotate(260deg);cursor:pointer;}
 .required{color:var(--primary);}
 .tqs-optional-tag{background:rgba(199,36,177,.15);color:var(--accent);font-size:.7em;font-weight:700;padding:2px 9px;border-radius:10px;letter-spacing:.05em;text-transform:uppercase;vertical-align:middle;margin-left:6px;border:1px solid var(--border);}
@@ -63,10 +63,7 @@ function tqs_output_css() { ?>
 .tqs-type-section{display:none;}
 /* Airport field */
 .tqs-airport-wrap{display:flex;flex-direction:column;gap:0;width:100%;}
-.tqs-airport-search{padding:9px 13px;background:#3a1a60;border:1px solid var(--border);border-bottom:none;border-radius:7px 7px 0 0;color:var(--text);font-size:.9em;font-family:'Nunito',sans-serif;width:100%;box-sizing:border-box;transition:border-color .2s,box-shadow .2s;}
-.tqs-airport-search::placeholder{color:var(--text-muted);font-style:italic;}
-.tqs-airport-search:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow);}
-.tqs-airport-select{padding:10px 13px;background:var(--bg-input);border:1px solid var(--border);border-radius:0 0 7px 7px;color:var(--text);font-size:.95em;font-family:'Nunito',sans-serif;width:100%;box-sizing:border-box;transition:border-color .2s,box-shadow .2s;cursor:pointer;}
+.tqs-airport-select{padding:10px 13px;background:var(--bg-input);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:.95em;font-family:'Nunito',sans-serif;width:100%;box-sizing:border-box;transition:border-color .2s,box-shadow .2s;cursor:pointer;}
 .tqs-airport-select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow);background:#3a1a60;}
 .tqs-airport-select option,.tqs-airport-select optgroup{background:#23103d;color:var(--text);}
 .tqs-airport-other{margin-top:7px;padding:10px 13px;background:var(--bg-input);border:2px dashed var(--primary);border-radius:7px;color:var(--text);font-size:.95em;font-family:'Nunito',sans-serif;width:100%;box-sizing:border-box;}
@@ -125,13 +122,6 @@ function tqs_output_css() { ?>
 .tqs-checkbox-label:has(input:checked){color:var(--accent-light);font-weight:700!important;}
 /* Return date error */
 .tqs-return-date-error{display:flex;align-items:center;gap:6px;background:rgba(255,77,109,.12);border:1px solid var(--error);border-left:5px solid var(--error);color:#ff8fa3;padding:10px 16px;border-radius:6px;margin-top:6px;font-size:.9em;font-weight:600;}
-/* Comments */
-.tqs-comments-grid{display:flex;flex-direction:column;gap:20px;}
-.tqs-comments-box{background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:.97em;padding:12px 14px;width:100%;box-sizing:border-box;resize:vertical;min-height:130px;line-height:1.6;}
-.tqs-comments-box:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow);background:#3a1a60;}
-.tqs-char-counter{text-align:right;font-size:.79em;color:var(--text-muted);margin-top:4px;}
-.tqs-char-counter.warn{color:#ffb300;font-weight:700;}
-.tqs-char-counter.over{color:var(--error);font-weight:700;}
 /* Submit */
 .tqs-submit-row{text-align:center;margin-top:14px;}
 .tqs-submit-btn{background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:#fff;border:none;padding:15px 52px;font-family:'Rajdhani',sans-serif;font-size:1.1em;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-radius:9px;cursor:pointer;box-shadow:0 0 22px var(--primary-glow);transition:all .15s ease;}
@@ -156,6 +146,46 @@ function tqs_output_css() { ?>
 }
 /* Selects global */
 .tqs-field select:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow);outline:none;background:#3a1a60;}
+/* --- Smaller font sizing overrides --- */
+.tqs-form-wrapper{font-size:14px;}
+.tqs-form-header h2{font-size:1.55em;}
+.tqs-form-header p{font-size:.90em;}
+.tqs-form-section h3{font-size:.95em;}
+.tqs-hint{font-size:.82em;}
+.tqs-field label{font-size:.75em;}
+.tqs-field input[type=text],
+.tqs-field input[type=email],
+.tqs-field input[type=tel],
+.tqs-field input[type=date],
+.tqs-field input[type=number],
+.tqs-field select:not(.tqs-airport-select):not(.tqs-dial-select),
+.tqs-field textarea,
+.tqs-phone-number{font-size:.90em;padding:9px 12px;}
+.tqs-type-label{font-size:.92em;}
+.tqs-pax-type{font-size:.92em;}
+.tqs-pax-count{font-size:1.25em;}
+.tqs-submit-btn{font-size:1.00em;padding:13px 46px;}
+/* Language switcher */
+.tqs-lang-switcher{display:flex;justify-content:flex-end;gap:8px;margin-bottom:14px;}
+.tqs-lang-btn{background:none;border:2px solid transparent;border-radius:7px;cursor:pointer;font-size:.88em;padding:5px 10px;line-height:1;transition:border-color .15s,transform .15s,box-shadow .15s,color .15s;display:flex;align-items:center;gap:6px;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:.07em;color:var(--text-muted);}
+.tqs-lang-btn:hover{border-color:var(--accent);transform:scale(1.05);color:var(--accent);}
+.tqs-lang-btn.tqs-lang-active{border-color:var(--primary);box-shadow:0 0 10px var(--primary-glow);color:var(--accent-light);}
+/* CSS flags */
+.tqs-flag{display:inline-block;width:26px;height:17px;border-radius:3px;flex-shrink:0;background-size:cover;border:1px solid rgba(255,255,255,.15);}
+.tqs-flag-gb{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30'%3E%3Crect width='60' height='30' fill='%23012169'/%3E%3Cpath d='M0,0 L60,30 M60,0 L0,30' stroke='%23fff' stroke-width='6'/%3E%3Cpath d='M0,0 L60,30 M60,0 L0,30' stroke='%23C8102E' stroke-width='4'/%3E%3Cpath d='M30,0 v30 M0,15 h60' stroke='%23fff' stroke-width='10'/%3E%3Cpath d='M30,0 v30 M0,15 h60' stroke='%23C8102E' stroke-width='6'/%3E%3C/svg%3E");}
+.tqs-flag-nl{background:linear-gradient(to bottom,%23AE1C28 33.33%,white 33.33%,white 66.66%,%2321468B 66.66%);}
+/* Type card icons */
+.tqs-type-icon{display:flex;align-items:center;justify-content:center;margin-bottom:4px;color:var(--text-muted);transition:color .15s;}
+.tqs-type-card.active .tqs-type-icon,.tqs-type-card:hover .tqs-type-icon{color:var(--accent);}
+/* Section heading icons */
+.tqs-section-icon{display:inline-block;vertical-align:middle;margin-right:7px;position:relative;top:-1px;opacity:.9;}
+/* Field label icons */
+.tqs-label-icon{display:inline-block;vertical-align:middle;margin-right:4px;position:relative;top:-1px;opacity:.75;}
+/* Passenger icons */
+.tqs-pax-icon{display:flex;align-items:center;justify-content:center;color:var(--text-muted);flex-shrink:0;min-width:30px;transition:color .2s;}
+.tqs-pax-card.pax-active .tqs-pax-icon{color:var(--accent);}
+/* Comments section */
+.tqs-comments-section{border-bottom:none;}
 </style>
 <?php }
 
@@ -166,6 +196,129 @@ function tqs_output_js() { ?>
 <script id="tqs-form-script">
 (function(){
 'use strict';
+/* ---- TRANSLATIONS ---- */
+var TQS_TRANS={
+en:{
+  header_title:'Plan Your Dream Trip with TQS Travels',
+  header_subtitle:'Fill in your travel requirements and our team will get back to you within 24 hours.',
+  section_personal:'Personal Information',
+  label_full_name:'Full Name',label_email:'Email Address',label_phone:'Phone Number',
+  hint_phone:'Numbers only - no spaces, dashes or brackets',
+  ph_phone:'Digits only e.g. 612345678',ph_wa:'Digits only e.g. 612345678',
+  label_whatsapp:'WhatsApp Number',opt_optional:'optional',
+  label_wa_same:'Same as phone number',
+  section_travel_type:'Travel Type',type_oneway:'One Way',type_return:'Return',type_multicity:'Multi-City',
+  section_oneway:'Flight Details - One Way',section_return:'Flight Details - Return',section_multicity:'Multi-City Legs',
+  hint_multicity:'Minimum 3 legs required. Click "+ Add Another Leg" to add more stops.',
+  label_traveling_from:'Traveling From',label_destination:'Destination',
+  label_dep_date:'Departure Date',label_return_date:'Return Date',
+  label_dep_airport:'Departure Airport',label_arr_airport:'Arrival Airport',label_arr_date:'Arrival Date',
+  opt_select_airport:'-- Select Airport --',opt_other:'Other - Enter Manually',
+  ph_airport_other:'Enter airport name, city or IATA code',
+  btn_add_leg:'+ Add Another Leg',btn_remove:'Remove',leg_label:'Leg',
+  section_passengers:'Passengers',
+  hint_passengers:'Maximum 9 passengers total. Infants cannot exceed the number of adults.',
+  pax_adults:'Adults',pax_adults_age:'12+ years',
+  pax_children:'Children',pax_children_age:'2 - 11 years',
+  pax_infants:'Infants',pax_infants_age:'Under 2 years',
+  pax_summary:'Total: <strong>{0} / {1}</strong> passengers \u00a0\u00b7\u00a0 Adults: <strong>{2}</strong> \u00a0\u00b7\u00a0 Children: <strong>{3}</strong> \u00a0\u00b7\u00a0 Infants: <strong>{4}</strong>',
+  btn_submit:'Send My Travel Inquiry',
+  err_min_adult:'At least 1 adult is required.',
+  err_max_pax:'Maximum {0} passengers. Total would be {1}.',
+  err_infants_exceed:'Infants ({0}) cannot exceed adults ({1}).',
+  err_reduce_adults:'Cannot reduce adults below infant count ({0}). Reduce infants first.',
+  err_min_adult_submit:'At least 1 adult (12+) is required.',
+  err_max_pax_submit:'Total passengers cannot exceed {0}. You selected {1}.',
+  err_infants_exceed_submit:'Infants ({0}) cannot exceed adults ({1}).',
+  err_return_date:'Return date must be after the departure date.',
+  err_return_date_dep:'Return date must be after the departure date ({0}).',
+  err_arr_date_leg:'Arrival date must be on or after departure date.',
+  err_phone_digits:'Phone number must be digits only (4-15 digits).',
+  err_wa_digits:'WhatsApp number must be digits only (4-15 digits).',
+  section_comments:'Additional Comments',
+  label_comments:'Comments / Special Requests',
+  ph_comments:'Any special requests, preferred airlines, seat preferences, or additional information\u2026',
+  success_title:'Thank you for your inquiry!',
+  success_body:'Our team at <strong>TQS Travels</strong> will get back to you within 24 hours.'
+},
+nl:{
+  header_title:'Plan Uw Droomreis met TQS Travels',
+  header_subtitle:'Vul uw reisgegevens in en ons team neemt binnen 24 uur contact met u op.',
+  section_personal:'Persoonlijke Gegevens',
+  label_full_name:'Volledige Naam',label_email:'E-mailadres',label_phone:'Telefoonnummer',
+  hint_phone:'Alleen cijfers - geen spaties, koppeltekens of haakjes',
+  ph_phone:'Alleen cijfers bijv. 612345678',ph_wa:'Alleen cijfers bijv. 612345678',
+  label_whatsapp:'WhatsApp Nummer',opt_optional:'optioneel',
+  label_wa_same:'Hetzelfde als telefoonnummer',
+  section_travel_type:'Reistype',type_oneway:'Enkele Reis',type_return:'Retour',type_multicity:'Multi-City',
+  section_oneway:'Vluchtgegevens - Enkele Reis',section_return:'Vluchtgegevens - Retour',section_multicity:'Multi-City Vluchten',
+  hint_multicity:'Minimaal 3 vluchten vereist. Klik op "+ Voeg Vlucht Toe" om meer stops toe te voegen.',
+  label_traveling_from:'Vertrekplaats',label_destination:'Bestemming',
+  label_dep_date:'Vertrekdatum',label_return_date:'Retourdatum',
+  label_dep_airport:'Vertrekluchthaven',label_arr_airport:'Aankomstluchthaven',label_arr_date:'Aankomstdatum',
+  opt_select_airport:'-- Selecteer Luchthaven --',opt_other:'Anders - Handmatig Invoeren',
+  ph_airport_other:'Voer luchthavennaam, stad of IATA-code in',
+  btn_add_leg:'+ Voeg Vlucht Toe',btn_remove:'Verwijderen',leg_label:'Vlucht',
+  section_passengers:'Passagiers',
+  hint_passengers:'Maximaal 9 passagiers totaal. Babies mogen het aantal volwassenen niet overschrijden.',
+  pax_adults:'Volwassenen',pax_adults_age:'12+ jaar',
+  pax_children:'Kinderen',pax_children_age:'2 - 11 jaar',
+  pax_infants:'Babies',pax_infants_age:'Onder 2 jaar',
+  pax_summary:'Totaal: <strong>{0} / {1}</strong> passagiers \u00a0\u00b7\u00a0 Volwassenen: <strong>{2}</strong> \u00a0\u00b7\u00a0 Kinderen: <strong>{3}</strong> \u00a0\u00b7\u00a0 Babies: <strong>{4}</strong>',
+  btn_submit:'Stuur Mijn Reisaanvraag',
+  err_min_adult:'Minimaal 1 volwassene is vereist.',
+  err_max_pax:'Maximaal {0} passagiers. Totaal zou {1} zijn.',
+  err_infants_exceed:'Babies ({0}) mogen volwassenen ({1}) niet overschrijden.',
+  err_reduce_adults:'Kan volwassenen niet onder het aantal babies ({0}) verlagen. Verminder eerst het aantal babies.',
+  err_min_adult_submit:'Minimaal 1 volwassene (12+) is vereist.',
+  err_max_pax_submit:'Totaal passagiers mag {0} niet overschrijden. U heeft {1} geselecteerd.',
+  err_infants_exceed_submit:'Babies ({0}) mogen volwassenen ({1}) niet overschrijden.',
+  err_return_date:'Retourdatum moet na de vertrekdatum zijn.',
+  err_return_date_dep:'Retourdatum moet na de vertrekdatum ({0}) zijn.',
+  err_arr_date_leg:'Aankomstdatum moet op of na de vertrekdatum zijn.',
+  err_phone_digits:'Telefoonnummer moet alleen cijfers bevatten (4-15 cijfers).',
+  err_wa_digits:'WhatsApp-nummer moet alleen cijfers bevatten (4-15 cijfers).',
+  section_comments:'Aanvullende Opmerkingen',
+  label_comments:'Opmerkingen / Speciale Verzoeken',
+  ph_comments:'Speciale verzoeken, voorkeur luchtvaartmaatschappijen, stoelvoorkeuren of aanvullende informatie\u2026',
+  success_title:'Bedankt voor uw aanvraag!',
+  success_body:'Ons team bij <strong>TQS Travels</strong> neemt binnen 24 uur contact met u op.'
+}};
+var tqsCurrentLang='en';
+function tqsT(key){
+  var t=TQS_TRANS[tqsCurrentLang]||TQS_TRANS.en;
+  var s=(t[key]!==undefined)?t[key]:((TQS_TRANS.en[key]!==undefined)?TQS_TRANS.en[key]:key);
+  for(var i=1;i<arguments.length;i++)s=s.split('{' + (i-1) + '}').join(arguments[i]);
+  return s;
+}
+window.tqsSwitchLang=function(lang){
+  if(!TQS_TRANS[lang])return;
+  tqsCurrentLang=lang;
+  try{localStorage.setItem('tqs_lang',lang);}catch(e){}
+  var lf=document.getElementById('tqs-lang-field');if(lf)lf.value=lang;
+  document.querySelectorAll('.tqs-lang-btn').forEach(function(b){b.classList.toggle('tqs-lang-active',b.dataset.lang===lang);});
+  tqsApplyLang();
+};
+function tqsApplyLang(){
+  var t=TQS_TRANS[tqsCurrentLang]||TQS_TRANS.en;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var key=el.getAttribute('data-i18n');
+    if(t[key]!==undefined)el.textContent=t[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+    var key=el.getAttribute('data-i18n-html');
+    if(t[key]!==undefined)el.innerHTML=t[key];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(function(el){
+    var key=el.getAttribute('data-i18n-ph');
+    if(t[key]!==undefined)el.placeholder=t[key];
+  });
+  document.querySelectorAll('.tqs-leg-badge[data-leg-num]').forEach(function(b){
+    var num=b.getAttribute('data-leg-num');
+    b.innerHTML='<span data-i18n="leg_label">'+tqsT('leg_label')+'</span> '+num;
+  });
+  updatePaxSummary();
+}
 var MAX_TOTAL=9,MIN_LEGS=3,legCount=0;
 var pax={adults:1,kids:0,infants:0};
 
@@ -181,11 +334,11 @@ window.tqsChangePax=function(type,delta){
   var nv=pax[type]+delta,nt=(pax.adults+pax.kids+pax.infants)-pax[type]+nv;
   clearPaxError();
   if(nv<0)return;
-  if(type==='adults'&&nv<1){showPaxError('At least 1 adult is required.');return;}
-  if(nt>MAX_TOTAL){showPaxError('Maximum '+MAX_TOTAL+' passengers. Total would be '+nt+'.');return;}
+  if(type==='adults'&&nv<1){showPaxError(tqsT('err_min_adult'));return;}
+  if(nt>MAX_TOTAL){showPaxError(tqsT('err_max_pax',MAX_TOTAL,nt));return;}
   var na=type==='adults'?nv:pax.adults,ni=type==='infants'?nv:pax.infants;
-  if(ni>na){showPaxError('Infants ('+ni+') cannot exceed adults ('+na+').');return;}
-  if(type==='adults'&&pax.infants>nv){showPaxError('Cannot reduce adults below infant count ('+pax.infants+'). Reduce infants first.');return;}
+  if(ni>na){showPaxError(tqsT('err_infants_exceed',ni,na));return;}
+  if(type==='adults'&&pax.infants>nv){showPaxError(tqsT('err_reduce_adults',pax.infants));return;}
   pax[type]=nv;renderPax();
 };
 function renderPax(){
@@ -203,7 +356,7 @@ function renderPax(){
 }
 function updatePaxSummary(){
   var tot=pax.adults+pax.kids+pax.infants,bar=document.getElementById('tqs-pax-summary'),txt=document.getElementById('tqs-pax-summary-text');
-  if(txt)txt.innerHTML='Total: <strong>'+tot+' / '+MAX_TOTAL+'</strong> passengers &nbsp;&middot;&nbsp; Adults: <strong>'+pax.adults+'</strong> &nbsp;&middot;&nbsp; Children: <strong>'+pax.kids+'</strong> &nbsp;&middot;&nbsp; Infants: <strong>'+pax.infants+'</strong>';
+  if(txt)txt.innerHTML=tqsT('pax_summary',tot,MAX_TOTAL,pax.adults,pax.kids,pax.infants);
   if(bar){bar.classList.remove('pax-warn','pax-full');if(tot>=MAX_TOTAL)bar.classList.add('pax-full');else if(tot>=7)bar.classList.add('pax-warn');}
 }
 function showPaxError(m){var e=document.getElementById('tqs-pax-error');if(e){e.textContent=m;e.style.display='block';}}
@@ -237,25 +390,7 @@ window.tqsToggleOther=function(sel){
   else{oi.style.display='none';oi.removeAttribute('required');oi.value='';}
 };
 
-/* ---- AIRPORT SEARCH ---- */
-function initSearchOnSelect(sel){
-  var wrap=sel.closest('.tqs-airport-wrap');if(!wrap)return;
-  var si=wrap.querySelector('.tqs-airport-search');if(!si)return;
-  var ogs=Array.from(sel.querySelectorAll('optgroup'));
-  si.addEventListener('input',function(){
-    var q=this.value.toLowerCase().trim();
-    if(!q){ogs.forEach(function(g){g.style.display='';g.querySelectorAll('option').forEach(function(o){o.style.display='';});});return;}
-    ogs.forEach(function(g){
-      var any=false;
-      g.querySelectorAll('option').forEach(function(o){
-        if(o.value===''||o.value==='other'||o.textContent.toLowerCase().includes(q)){o.style.display='';if(o.value!==''&&o.value!=='other')any=true;}
-        else o.style.display='none';
-      });
-      g.style.display=any?'':'none';
-    });
-  });
-}
-function initAirportSearch(){document.querySelectorAll('.tqs-airport-select').forEach(initSearchOnSelect);}
+
 
 /* ---- PHONE ---- */
 function initPhoneFields(){
@@ -292,12 +427,12 @@ window.tqsToggleWa=function(cb){
 function validatePhoneFields(){
   var blocked=false,pv=document.getElementById('tqs_phone'),pe=document.getElementById('tqs-phone-error');
   if(pv){
-    if(!pv.value||!/^\d{4,15}$/.test(pv.value)){if(pe){pe.textContent='Phone number must be digits only (4-15 digits).';pe.style.display='block';}pv.style.borderColor='var(--error)';blocked=true;}
+    if(!pv.value||!/^\d{4,15}$/.test(pv.value)){if(pe){pe.textContent=tqsT('err_phone_digits');pe.style.display='block';}pv.style.borderColor='var(--error)';blocked=true;}
     else{if(pe)pe.style.display='none';pv.style.borderColor='';}
   }
   var wc=document.getElementById('tqs_wa_same'),wv=document.getElementById('tqs_whatsapp'),we=document.getElementById('tqs-wa-error');
   if(wc&&!wc.checked&&wv&&wv.value){
-    if(!/^\d{4,15}$/.test(wv.value)){if(we){we.textContent='WhatsApp number must be digits only (4-15 digits).';we.style.display='block';}wv.style.borderColor='var(--error)';blocked=true;}
+    if(!/^\d{4,15}$/.test(wv.value)){if(we){we.textContent=tqsT('err_wa_digits');we.style.display='block';}wv.style.borderColor='var(--error)';blocked=true;}
     else{if(we)we.style.display='none';wv.style.borderColor='';}
   }
   return blocked;
@@ -307,13 +442,13 @@ function validatePhoneFields(){
 window.tqsReturnDepChanged=function(di){
   var ai=document.getElementById('tqs_return_date'),ee=document.getElementById('tqs-return-date-error');
   if(!ai)return;ai.min=di.value;
-  if(ai.value&&ai.value<=di.value){ai.value='';if(ee){ee.textContent='Return date must be after the departure date.';ee.style.display='flex';}}
+  if(ai.value&&ai.value<=di.value){ai.value='';if(ee){ee.textContent=tqsT('err_return_date');ee.style.display='flex';}}
   else if(ee)ee.style.display='none';
 };
 window.tqsReturnArrChanged=function(ai){
   var di=document.getElementById('tqs_travel_date_return'),ee=document.getElementById('tqs-return-date-error');
   if(!di||!ee)return;
-  if(di.value&&ai.value&&ai.value<=di.value){ee.textContent='Return date must be after the departure date ('+di.value+').';ee.style.display='flex';ai.style.borderColor='var(--error)';ai.style.boxShadow='0 0 0 3px rgba(255,77,109,.25)';}
+  if(di.value&&ai.value&&ai.value<=di.value){ee.textContent=tqsT('err_return_date_dep',di.value);ee.style.display='flex';ai.style.borderColor='var(--error)';ai.style.boxShadow='0 0 0 3px rgba(255,77,109,.25)';}
   else{ee.style.display='none';ai.style.borderColor='';ai.style.boxShadow='';}
 };
 
@@ -340,14 +475,13 @@ window.tqsAddLeg=function(){
   var container=document.getElementById('tqs-mc-legs');if(!container)return;
   var today=new Date().toISOString().split('T')[0];
   var es=document.querySelector('.tqs-mc-leg select.tqs-airport-select');
-  var oh=es?es.innerHTML:'<option value="">-- Select Airport --</option>';
+  var oh=es?es.innerHTML:'<option value="" data-i18n="opt_select_airport">-- Select Airport --</option>';
   var div=document.createElement('div');div.className='tqs-mc-leg';div.dataset.leg=legCount-1;
-  div.innerHTML='<div class="tqs-mc-leg-header"><span class="tqs-leg-badge">Leg '+legCount+'</span><button type="button" class="tqs-remove-leg" onclick="tqsRemoveLeg(this)">Remove</button></div>'
-    +'<div class="tqs-row"><div class="tqs-field"><label>Departure Airport</label><div class="tqs-airport-wrap"><input type="text" class="tqs-airport-search" placeholder="Search airport or city..." /><select name="tqs_mc_from[]" class="tqs-airport-select" onchange="tqsToggleOther(this)">'+oh+'</select><input type="text" name="tqs_mc_from_other[]" class="tqs-airport-other" placeholder="Enter airport name, city or IATA code" style="display:none;" /></div></div>'
-    +'<div class="tqs-field"><label>Arrival Airport</label><div class="tqs-airport-wrap"><input type="text" class="tqs-airport-search" placeholder="Search airport or city..." /><select name="tqs_mc_to[]" class="tqs-airport-select" onchange="tqsToggleOther(this)">'+oh+'</select><input type="text" name="tqs_mc_to_other[]" class="tqs-airport-other" placeholder="Enter airport name, city or IATA code" style="display:none;" /></div></div></div>'
-    +'<div class="tqs-row tqs-mc-dates-row"><div class="tqs-field tqs-field--date"><label>Departure Date <span class="required">*</span></label><input type="date" name="tqs_mc_dep_date[]" class="tqs-mc-dep-date" min="'+today+'" onchange="tqsValidateLegDates(this)" /></div><div class="tqs-field tqs-field--date"><label>Arrival Date <span class="required">*</span></label><input type="date" name="tqs_mc_arr_date[]" class="tqs-mc-arr-date" min="'+today+'" onchange="tqsValidateLegDates(this)" /></div><div class="tqs-leg-date-error" style="display:none;">Arrival date must be on or after departure date.</div></div>';
+  div.innerHTML='<div class="tqs-mc-leg-header"><span class="tqs-leg-badge" data-leg-num="'+legCount+'"><span data-i18n="leg_label">'+tqsT('leg_label')+'</span> '+legCount+'</span><button type="button" class="tqs-remove-leg" onclick="tqsRemoveLeg(this)" data-i18n="btn_remove">'+tqsT('btn_remove')+'</button></div>'
+    +'<div class="tqs-row"><div class="tqs-field"><label><span data-i18n="label_dep_airport">'+tqsT('label_dep_airport')+'</span></label><div class="tqs-airport-wrap"><select name="tqs_mc_from[]" class="tqs-airport-select" onchange="tqsToggleOther(this)">'+oh+'</select><input type="text" name="tqs_mc_from_other[]" class="tqs-airport-other" data-i18n-ph="ph_airport_other" placeholder="'+tqsT('ph_airport_other')+'" style="display:none;" /></div></div>'
+    +'<div class="tqs-field"><label><span data-i18n="label_arr_airport">'+tqsT('label_arr_airport')+'</span></label><div class="tqs-airport-wrap"><select name="tqs_mc_to[]" class="tqs-airport-select" onchange="tqsToggleOther(this)">'+oh+'</select><input type="text" name="tqs_mc_to_other[]" class="tqs-airport-other" data-i18n-ph="ph_airport_other" placeholder="'+tqsT('ph_airport_other')+'" style="display:none;" /></div></div></div>'
+    +'<div class="tqs-row tqs-mc-dates-row"><div class="tqs-field tqs-field--date"><label><span data-i18n="label_dep_date">'+tqsT('label_dep_date')+'</span> <span class="required">*</span></label><input type="date" name="tqs_mc_dep_date[]" class="tqs-mc-dep-date" min="'+today+'" onchange="tqsValidateLegDates(this)" /></div><div class="tqs-field tqs-field--date"><label><span data-i18n="label_arr_date">'+tqsT('label_arr_date')+'</span> <span class="required">*</span></label><input type="date" name="tqs_mc_arr_date[]" class="tqs-mc-arr-date" min="'+today+'" onchange="tqsValidateLegDates(this)" /></div><div class="tqs-leg-date-error" data-i18n="err_arr_date_leg" style="display:none;">'+tqsT('err_arr_date_leg')+'</div></div>';
   container.appendChild(div);reNumberLegs();
-  div.querySelectorAll('.tqs-airport-select').forEach(initSearchOnSelect);
   div.scrollIntoView({behavior:'smooth',block:'center'});
 };
 window.tqsRemoveLeg=function(btn){
@@ -356,19 +490,11 @@ window.tqsRemoveLeg=function(btn){
 };
 function reNumberLegs(){
   document.querySelectorAll('.tqs-mc-leg').forEach(function(leg,i){
-    var b=leg.querySelector('.tqs-leg-badge');if(b)b.textContent='Leg '+(i+1);
+    var b=leg.querySelector('.tqs-leg-badge');if(b){b.setAttribute('data-leg-num',i+1);b.innerHTML='<span data-i18n="leg_label">'+tqsT('leg_label')+'</span> '+(i+1);}
     leg.dataset.leg=i;
     var rb=leg.querySelector('.tqs-remove-leg');if(rb)rb.style.display=i<MIN_LEGS?'none':'inline-flex';
   });
   legCount=document.querySelectorAll('.tqs-mc-leg').length;
-}
-
-/* ---- CHAR COUNTER ---- */
-function initCharCounter(){
-  var ta=document.getElementById('tqs_message'),ct=document.getElementById('tqs-char-count');
-  if(!ta||!ct)return;var mx=1000;
-  function upd(){var l=ta.value.length;if(l>mx){ta.value=ta.value.substring(0,mx);l=mx;}ct.textContent=l;var w=ct.closest('.tqs-char-counter');if(w){w.classList.remove('warn','over');if(l>=mx)w.classList.add('over');else if(l>=mx*.85)w.classList.add('warn');}}
-  ta.addEventListener('input',upd);upd();
 }
 
 /* ---- FORM GUARD ---- */
@@ -378,13 +504,13 @@ function initFormGuard(){
     clearPaxError();var blocked=false;
     if(validatePhoneFields())blocked=true;
     var tot=pax.adults+pax.kids+pax.infants;
-    if(pax.adults<1){showPaxError('At least 1 adult (12+) is required.');blocked=true;}
-    else if(tot>MAX_TOTAL){showPaxError('Total passengers cannot exceed '+MAX_TOTAL+'. You selected '+tot+'.');blocked=true;}
-    else if(pax.infants>pax.adults){showPaxError('Infants ('+pax.infants+') cannot exceed adults ('+pax.adults+').');blocked=true;}
+    if(pax.adults<1){showPaxError(tqsT('err_min_adult_submit'));blocked=true;}
+    else if(tot>MAX_TOTAL){showPaxError(tqsT('err_max_pax_submit',MAX_TOTAL,tot));blocked=true;}
+    else if(pax.infants>pax.adults){showPaxError(tqsT('err_infants_exceed_submit',pax.infants,pax.adults));blocked=true;}
     var at=document.querySelector('input[name="tqs_travel_type"]:checked');
     if(at&&at.value==='return'){
       var di=document.getElementById('tqs_travel_date_return'),ai=document.getElementById('tqs_return_date'),ee=document.getElementById('tqs-return-date-error');
-      if(di&&ai&&di.value&&ai.value&&ai.value<=di.value){if(ee){ee.textContent='Return date must be after the departure date.';ee.style.display='flex';}if(ai){ai.style.borderColor='var(--error)';ai.style.boxShadow='0 0 0 3px rgba(231,76,60,.18)';}blocked=true;}
+      if(di&&ai&&di.value&&ai.value&&ai.value<=di.value){if(ee){ee.textContent=tqsT('err_return_date');ee.style.display='flex';}if(ai){ai.style.borderColor='var(--error)';ai.style.boxShadow='0 0 0 3px rgba(231,76,60,.18)';}blocked=true;}
     }
     if(at&&at.value==='multicity'){if(validateAllLegDates())blocked=true;}
     if(blocked){
@@ -397,8 +523,11 @@ function initFormGuard(){
 
 /* ---- BOOT ---- */
 document.addEventListener('DOMContentLoaded',function(){
-  initPaxCounts();initTravelTypeSwitcher();initAirportSearch();
-  initLegCount();initFormGuard();initPhoneFields();initDialSelects();initCharCounter();
+  initPaxCounts();initTravelTypeSwitcher();
+  initLegCount();initFormGuard();initPhoneFields();initDialSelects();
+  var saved;try{saved=localStorage.getItem('tqs_lang');}catch(e){}
+  if(saved&&TQS_TRANS[saved])tqsSwitchLang(saved);
+  else tqsApplyLang();
 });
 })();
 </script>
@@ -446,6 +575,26 @@ function tqs_get_airports() {
             'CWP'=>'Chitral - Chitral Airport (CWP)',
             'WNS'=>'Nawabshah - Shaheed Benazirabad Airport (WNS)',
             'PZH'=>'Zhob - Zhob Airport (PZH)',
+        ],
+        'UAE' => [
+            'DXB'=>'Dubai - Dubai International Airport (DXB)',
+            'AUH'=>'Abu Dhabi - Abu Dhabi International Airport (AUH)',
+            'SHJ'=>'Sharjah - Sharjah International Airport (SHJ)',
+            'DWC'=>'Dubai - Al Maktoum International Airport (DWC)',
+            'RKT'=>'Ras Al Khaimah - Ras Al Khaimah International Airport (RKT)',
+            'FJR'=>'Fujairah - Fujairah International Airport (FJR)',
+        ],
+        'Saudi Arabia' => [
+            'RUH'=>'Riyadh - King Khalid International Airport (RUH)',
+            'JED'=>'Jeddah - King Abdulaziz International Airport (JED)',
+            'DMM'=>'Dammam - King Fahd International Airport (DMM)',
+            'MED'=>'Medina - Prince Mohammad bin Abdulaziz Airport (MED)',
+            'AHB'=>'Abha - Abha Regional Airport (AHB)',
+            'TIF'=>'Taif - Taif Regional Airport (TIF)',
+            'GIZ'=>'Jizan - King Abdullah bin Abdulaziz Airport (GIZ)',
+            'TUU'=>'Tabuk - Tabuk Regional Airport (TUU)',
+            'HOF'=>'Al Ahsa - Al-Ahsa International Airport (HOF)',
+            'ELQ'=>'Al Qassim - Prince Nayef bin Abdulaziz Airport (ELQ)',
         ],
         'Germany' => [
             'FRA'=>'Frankfurt - Frankfurt Airport (FRA)',
@@ -731,11 +880,6 @@ function tqs_render_inquiry_form() {
             $full_whatsapp = $wa_same ? $full_phone : ( $final_wa_code . $wa_digits );
 
             $travel_type    = sanitize_text_field( wp_unslash( $_POST['tqs_travel_type'] ?? '' ) );
-            $trip_type      = sanitize_text_field( wp_unslash( $_POST['tqs_trip_type']   ?? '' ) );
-            $budget         = sanitize_text_field( wp_unslash( $_POST['tqs_budget']      ?? '' ) );
-            $services       = isset( $_POST['tqs_services'] )       ? array_map( 'sanitize_text_field', array_map( 'wp_unslash', (array) $_POST['tqs_services'] ) )       : [];
-            $quick_requests = isset( $_POST['tqs_quick_requests'] ) ? array_map( 'sanitize_text_field', array_map( 'wp_unslash', (array) $_POST['tqs_quick_requests'] ) ) : [];
-            $message        = sanitize_textarea_field( wp_unslash( $_POST['tqs_message'] ?? '' ) );
 
             $adults  = max( 1, intval( $_POST['tqs_adults']  ?? 1 ) );
             $kids    = max( 0, intval( $_POST['tqs_kids']    ?? 0 ) );
@@ -756,6 +900,8 @@ function tqs_render_inquiry_form() {
             $return_dest_other = sanitize_text_field( wp_unslash( $_POST['tqs_destination_return_other']  ?? '' ) );
             $return_dep        = sanitize_text_field( wp_unslash( $_POST['tqs_travel_date_return']        ?? '' ) );
             $return_arr        = sanitize_text_field( wp_unslash( $_POST['tqs_return_date']               ?? '' ) );
+
+            $comments = sanitize_textarea_field( wp_unslash( $_POST['tqs_comments'] ?? '' ) );
 
             $mc_legs = [];
             if ( $travel_type === 'multicity' ) {
@@ -805,15 +951,14 @@ function tqs_render_inquiry_form() {
                     $from, $from_other, $destination, $dest_other,
                     $return_from, $return_from_other, $return_dest, $return_dest_other,
                     $travel_date, $return_dep, $return_arr, $mc_legs,
-                    $adults, $kids, $infants, $trip_type, $budget, $services,
-                    $quick_requests, $message
+                    $adults, $kids, $infants, $comments
                 );
             }
         }
     }
 
     if ( $submitted ) {
-        echo '<div class="tqs-success"><h3>Thank you for your inquiry!</h3><p>Our team at <strong>TQS Travels</strong> will get back to you within 24 hours.</p></div>';
+        echo '<div class="tqs-success"><h3><span data-i18n="success_title">Thank you for your inquiry!</span></h3><p data-i18n-html="success_body">Our team at <strong>TQS Travels</strong> will get back to you within 24 hours.</p></div>';
     } else {
         if ( !empty($errors) ) {
             echo '<div class="tqs-errors"><ul>';
@@ -843,26 +988,31 @@ function tqs_render_form() {
     ?>
 <div class="tqs-form-wrapper">
   <div class="tqs-form-header">
-    <h2>Plan Your Dream Trip with TQS Travels</h2>
-    <p>Fill in your travel requirements and our team will get back to you within 24 hours.</p>
+    <div class="tqs-lang-switcher">
+      <button type="button" class="tqs-lang-btn tqs-lang-active" data-lang="en" onclick="tqsSwitchLang('en')" title="English"><span class="tqs-flag tqs-flag-gb"></span> EN</button>
+      <button type="button" class="tqs-lang-btn" data-lang="nl" onclick="tqsSwitchLang('nl')" title="Nederlands"><span class="tqs-flag tqs-flag-nl"></span> NL</button>
+    </div>
+    <h2 data-i18n="header_title">Plan Your Dream Trip with TQS Travels</h2>
+    <p data-i18n="header_subtitle">Fill in your travel requirements and our team will get back to you within 24 hours.</p>
   </div>
   <form method="POST" class="tqs-inquiry-form" id="tqs-main-form" novalidate>
     <?php wp_nonce_field('tqs_inquiry_action','tqs_nonce'); ?>
+    <input type="hidden" name="tqs_lang" id="tqs-lang-field" value="en" />
 
     <!-- PERSONAL INFORMATION -->
-    <div class="tqs-form-section"><h3>Personal Information</h3>
+    <div class="tqs-form-section"><h3 data-i18n="section_personal">Personal Information</h3>
       <div class="tqs-row">
         <div class="tqs-field">
-          <label for="tqs_full_name">Full Name <span class="required">*</span></label>
+          <label for="tqs_full_name"><span data-i18n="label_full_name">Full Name</span> <span class="required">*</span></label>
           <input type="text" id="tqs_full_name" name="tqs_full_name" value="<?php echo esc_attr($_POST['tqs_full_name']??''); ?>" placeholder="e.g. John Smith" required />
         </div>
         <div class="tqs-field">
-          <label for="tqs_email">Email Address <span class="required">*</span></label>
+          <label for="tqs_email"><span data-i18n="label_email">Email Address</span> <span class="required">*</span></label>
           <input type="email" id="tqs_email" name="tqs_email" value="<?php echo esc_attr($_POST['tqs_email']??''); ?>" placeholder="e.g. john@email.com" required />
         </div>
       </div>
       <div class="tqs-row"><div class="tqs-field">
-        <label>Phone Number <span class="required">*</span></label>
+        <label><span data-i18n="label_phone">Phone Number</span> <span class="required">*</span></label>
         <div class="tqs-phone-wrap">
           <select name="tqs_phone_code" id="tqs_phone_code" class="tqs-dial-select" onchange="tqsSyncWaCode(this)">
             <?php foreach($dial_codes as $dl=>$dc): $io=($dc==='other'); ?>
@@ -870,16 +1020,16 @@ function tqs_render_form() {
             <?php endforeach; ?>
           </select>
           <input type="text" name="tqs_phone_code_other" id="tqs_phone_code_other" class="tqs-dial-other" placeholder="+00" value="<?php echo esc_attr($_POST['tqs_phone_code_other']??''); ?>" style="<?php echo $sel_phone_code==='other'?'display:flex;':'display:none;'; ?>" maxlength="6" />
-          <input type="tel" name="tqs_phone" id="tqs_phone" class="tqs-phone-number" placeholder="Digits only e.g. 612345678" value="<?php echo esc_attr($_POST['tqs_phone']??''); ?>" required inputmode="numeric" pattern="[0-9]{4,15}" />
+          <input type="tel" name="tqs_phone" id="tqs_phone" class="tqs-phone-number" data-i18n-ph="ph_phone" placeholder="Digits only e.g. 612345678" value="<?php echo esc_attr($_POST['tqs_phone']??''); ?>" required inputmode="numeric" pattern="[0-9]{4,15}" />
         </div>
-        <span class="tqs-field-hint">Numbers only - no spaces, dashes or brackets</span>
+        <span class="tqs-field-hint" data-i18n="hint_phone">Numbers only - no spaces, dashes or brackets</span>
         <div class="tqs-phone-error" id="tqs-phone-error" style="display:none;">Please enter digits only (e.g. 612345678)</div>
       </div></div>
       <div class="tqs-row"><div class="tqs-field">
-        <label>WhatsApp Number <span class="tqs-optional-tag">optional</span></label>
+        <label><span data-i18n="label_whatsapp">WhatsApp Number</span> <span class="tqs-optional-tag" data-i18n="opt_optional">optional</span></label>
         <label class="tqs-wa-same-label">
           <input type="checkbox" name="tqs_wa_same" id="tqs_wa_same" value="1" <?php checked($wa_same,true); ?> onchange="tqsToggleWa(this)" />
-          Same as phone number
+          <span data-i18n="label_wa_same">Same as phone number</span>
         </label>
         <div class="tqs-phone-wrap" id="tqs-wa-fields" style="<?php echo $wa_same?'display:none;':'display:flex;'; ?> margin-top:10px;">
           <select name="tqs_wa_code" id="tqs_wa_code" class="tqs-dial-select">
@@ -888,52 +1038,54 @@ function tqs_render_form() {
             <?php endforeach; ?>
           </select>
           <input type="text" name="tqs_wa_code_other" id="tqs_wa_code_other" class="tqs-dial-other" placeholder="+00" value="<?php echo esc_attr($_POST['tqs_wa_code_other']??''); ?>" style="<?php echo (isset($_POST['tqs_wa_code'])&&$_POST['tqs_wa_code']==='other')?'display:flex;':'display:none;'; ?>" maxlength="6" />
-          <input type="tel" name="tqs_whatsapp" id="tqs_whatsapp" class="tqs-phone-number" placeholder="Digits only e.g. 612345678" value="<?php echo esc_attr($_POST['tqs_whatsapp']??''); ?>" inputmode="numeric" pattern="[0-9]{4,15}" />
+          <input type="tel" name="tqs_whatsapp" id="tqs_whatsapp" class="tqs-phone-number" data-i18n-ph="ph_wa" placeholder="Digits only e.g. 612345678" value="<?php echo esc_attr($_POST['tqs_whatsapp']??''); ?>" inputmode="numeric" pattern="[0-9]{4,15}" />
         </div>
         <div class="tqs-phone-error" id="tqs-wa-error" style="display:none;">Please enter digits only (e.g. 612345678)</div>
       </div></div>
     </div>
 
     <!-- TRAVEL TYPE -->
-    <div class="tqs-form-section"><h3>Travel Type <span class="required">*</span></h3>
+    <div class="tqs-form-section"><h3><span data-i18n="section_travel_type">Travel Type</span> <span class="required">*</span></h3>
       <div class="tqs-travel-type-selector">
-        <?php foreach(['oneway'=>'One Way','return'=>'Return','multicity'=>'Multi-City'] as $v=>$l): ?>
+        <?php
+        $type_opts=['oneway'=>['label'=>'One Way','i18n'=>'type_oneway'],'return'=>['label'=>'Return','i18n'=>'type_return'],'multicity'=>['label'=>'Multi-City','i18n'=>'type_multicity']];
+        foreach($type_opts as $v=>$d): ?>
         <label class="tqs-type-card <?php echo $sel_type===$v?'active':''; ?>">
           <input type="radio" name="tqs_travel_type" value="<?php echo esc_attr($v); ?>" <?php checked($sel_type,$v); ?> />
-          <span class="tqs-type-label"><?php echo esc_html($l); ?></span>
+          <span class="tqs-type-label" data-i18n="<?php echo esc_attr($d['i18n']); ?>"><?php echo esc_html($d['label']); ?></span>
         </label>
         <?php endforeach; ?>
       </div>
     </div>
 
     <!-- ONE WAY -->
-    <div class="tqs-form-section tqs-type-section" id="tqs-section-oneway"><h3>Flight Details - One Way</h3>
+    <div class="tqs-form-section tqs-type-section" id="tqs-section-oneway"><h3 data-i18n="section_oneway">Flight Details - One Way</h3>
       <div class="tqs-row">
-        <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Traveling From','name'=>'tqs_from','id'=>'tqs_from','airports'=>$airports,'selected'=>sanitize_text_field($_POST['tqs_from']??''),'other_val'=>sanitize_text_field($_POST['tqs_from_other']??''),'other_name'=>'tqs_from_other']); ?></div>
-        <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Destination','name'=>'tqs_destination','id'=>'tqs_destination','airports'=>$airports,'selected'=>sanitize_text_field($_POST['tqs_destination']??''),'other_val'=>sanitize_text_field($_POST['tqs_destination_other']??''),'other_name'=>'tqs_destination_other','required'=>true]); ?></div>
+        <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Traveling From','i18n_key'=>'label_traveling_from','name'=>'tqs_from','id'=>'tqs_from','airports'=>$airports,'selected'=>sanitize_text_field($_POST['tqs_from']??''),'other_val'=>sanitize_text_field($_POST['tqs_from_other']??''),'other_name'=>'tqs_from_other']); ?></div>
+        <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Destination','i18n_key'=>'label_destination','name'=>'tqs_destination','id'=>'tqs_destination','airports'=>$airports,'selected'=>sanitize_text_field($_POST['tqs_destination']??''),'other_val'=>sanitize_text_field($_POST['tqs_destination_other']??''),'other_name'=>'tqs_destination_other','required'=>true]); ?></div>
       </div>
       <div class="tqs-row"><div class="tqs-field" style="max-width:280px;">
-        <label for="tqs_travel_date">Departure Date <span class="required">*</span></label>
+        <label for="tqs_travel_date"><span data-i18n="label_dep_date">Departure Date</span> <span class="required">*</span></label>
         <input type="date" id="tqs_travel_date" name="tqs_travel_date" value="<?php echo esc_attr($_POST['tqs_travel_date']??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" />
       </div></div>
     </div>
 
     <!-- RETURN -->
-    <div class="tqs-form-section tqs-type-section" id="tqs-section-return"><h3>Flight Details - Return</h3>
+    <div class="tqs-form-section tqs-type-section" id="tqs-section-return"><h3 data-i18n="section_return">Flight Details - Return</h3>
       <div class="tqs-row">
-        <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Traveling From','name'=>'tqs_from_return','id'=>'tqs_from_return','airports'=>$airports,'selected'=>sanitize_text_field($_POST['tqs_from_return']??''),'other_val'=>sanitize_text_field($_POST['tqs_from_return_other']??''),'other_name'=>'tqs_from_return_other']); ?></div>
-        <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Destination','name'=>'tqs_destination_return','id'=>'tqs_destination_return','airports'=>$airports,'selected'=>sanitize_text_field($_POST['tqs_destination_return']??''),'other_val'=>sanitize_text_field($_POST['tqs_destination_return_other']??''),'other_name'=>'tqs_destination_return_other','required'=>true]); ?></div>
+        <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Traveling From','i18n_key'=>'label_traveling_from','name'=>'tqs_from_return','id'=>'tqs_from_return','airports'=>$airports,'selected'=>sanitize_text_field($_POST['tqs_from_return']??''),'other_val'=>sanitize_text_field($_POST['tqs_from_return_other']??''),'other_name'=>'tqs_from_return_other']); ?></div>
+        <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Destination','i18n_key'=>'label_destination','name'=>'tqs_destination_return','id'=>'tqs_destination_return','airports'=>$airports,'selected'=>sanitize_text_field($_POST['tqs_destination_return']??''),'other_val'=>sanitize_text_field($_POST['tqs_destination_return_other']??''),'other_name'=>'tqs_destination_return_other','required'=>true]); ?></div>
       </div>
       <div class="tqs-row">
-        <div class="tqs-field"><label>Departure Date <span class="required">*</span></label><input type="date" name="tqs_travel_date_return" id="tqs_travel_date_return" value="<?php echo esc_attr($_POST['tqs_travel_date_return']??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" onchange="tqsReturnDepChanged(this)" /></div>
-        <div class="tqs-field"><label>Return Date <span class="required">*</span></label><input type="date" name="tqs_return_date" id="tqs_return_date" value="<?php echo esc_attr($_POST['tqs_return_date']??''); ?>" min="<?php echo esc_attr($_POST['tqs_travel_date_return']??date('Y-m-d')); ?>" onchange="tqsReturnArrChanged(this)" /></div>
+        <div class="tqs-field"><label><span data-i18n="label_dep_date">Departure Date</span> <span class="required">*</span></label><input type="date" name="tqs_travel_date_return" id="tqs_travel_date_return" value="<?php echo esc_attr($_POST['tqs_travel_date_return']??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" onchange="tqsReturnDepChanged(this)" /></div>
+        <div class="tqs-field"><label><span data-i18n="label_return_date">Return Date</span> <span class="required">*</span></label><input type="date" name="tqs_return_date" id="tqs_return_date" value="<?php echo esc_attr($_POST['tqs_return_date']??''); ?>" min="<?php echo esc_attr($_POST['tqs_travel_date_return']??date('Y-m-d')); ?>" onchange="tqsReturnArrChanged(this)" /></div>
       </div>
-      <div id="tqs-return-date-error" class="tqs-return-date-error" style="display:none;">Return date must be after the departure date.</div>
+      <div id="tqs-return-date-error" class="tqs-return-date-error" data-i18n="err_return_date" style="display:none;">Return date must be after the departure date.</div>
     </div>
 
     <!-- MULTI-CITY -->
-    <div class="tqs-form-section tqs-type-section" id="tqs-section-multicity"><h3>Multi-City Legs</h3>
-      <p class="tqs-hint">Minimum 3 legs required. Click "Add Another Leg" to add more stops.</p>
+    <div class="tqs-form-section tqs-type-section" id="tqs-section-multicity"><h3 data-i18n="section_multicity">Multi-City Legs</h3>
+      <p class="tqs-hint" data-i18n="hint_multicity">Minimum 3 legs required. Click "+ Add Another Leg" to add more stops.</p>
       <div id="tqs-mc-legs">
         <?php
         $mcf=(array)($_POST['tqs_mc_from']??['','','']);$mct=(array)($_POST['tqs_mc_to']??['','','']);
@@ -943,31 +1095,35 @@ function tqs_render_form() {
         for($i=0;$i<$mlc;$i++): ?>
         <div class="tqs-mc-leg" data-leg="<?php echo esc_attr($i); ?>">
           <div class="tqs-mc-leg-header">
-            <span class="tqs-leg-badge">Leg <?php echo intval($i+1); ?></span>
-            <?php if($i>=3): ?><button type="button" class="tqs-remove-leg" onclick="tqsRemoveLeg(this)">Remove</button><?php endif; ?>
+            <span class="tqs-leg-badge" data-leg-num="<?php echo intval($i+1); ?>"><span data-i18n="leg_label">Leg</span> <?php echo intval($i+1); ?></span>
+            <?php if($i>=3): ?><button type="button" class="tqs-remove-leg" onclick="tqsRemoveLeg(this)" data-i18n="btn_remove">Remove</button><?php endif; ?>
           </div>
           <div class="tqs-row">
-            <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Departure Airport','name'=>'tqs_mc_from[]','id'=>'tqs_mc_from_'.$i,'airports'=>$airports,'selected'=>sanitize_text_field($mcf[$i]??''),'other_val'=>sanitize_text_field($mcfo[$i]??''),'other_name'=>'tqs_mc_from_other[]']); ?></div>
-            <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Arrival Airport','name'=>'tqs_mc_to[]','id'=>'tqs_mc_to_'.$i,'airports'=>$airports,'selected'=>sanitize_text_field($mct[$i]??''),'other_val'=>sanitize_text_field($mcto[$i]??''),'other_name'=>'tqs_mc_to_other[]']); ?></div>
+            <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Departure Airport','i18n_key'=>'label_dep_airport','name'=>'tqs_mc_from[]','id'=>'tqs_mc_from_'.$i,'airports'=>$airports,'selected'=>sanitize_text_field($mcf[$i]??''),'other_val'=>sanitize_text_field($mcfo[$i]??''),'other_name'=>'tqs_mc_from_other[]']); ?></div>
+            <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Arrival Airport','i18n_key'=>'label_arr_airport','name'=>'tqs_mc_to[]','id'=>'tqs_mc_to_'.$i,'airports'=>$airports,'selected'=>sanitize_text_field($mct[$i]??''),'other_val'=>sanitize_text_field($mcto[$i]??''),'other_name'=>'tqs_mc_to_other[]']); ?></div>
           </div>
           <div class="tqs-row tqs-mc-dates-row">
-            <div class="tqs-field tqs-field--date"><label>Departure Date <span class="required">*</span></label><input type="date" name="tqs_mc_dep_date[]" class="tqs-mc-dep-date" value="<?php echo esc_attr($mcd[$i]??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" onchange="tqsValidateLegDates(this)" /></div>
-            <div class="tqs-field tqs-field--date"><label>Arrival Date <span class="required">*</span></label><input type="date" name="tqs_mc_arr_date[]" class="tqs-mc-arr-date" value="<?php echo esc_attr($mca[$i]??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" onchange="tqsValidateLegDates(this)" /></div>
-            <div class="tqs-leg-date-error" style="display:none;">Arrival date must be on or after departure date.</div>
+            <div class="tqs-field tqs-field--date"><label><span data-i18n="label_dep_date">Departure Date</span> <span class="required">*</span></label><input type="date" name="tqs_mc_dep_date[]" class="tqs-mc-dep-date" value="<?php echo esc_attr($mcd[$i]??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" onchange="tqsValidateLegDates(this)" /></div>
+            <div class="tqs-field tqs-field--date"><label><span data-i18n="label_arr_date">Arrival Date</span> <span class="required">*</span></label><input type="date" name="tqs_mc_arr_date[]" class="tqs-mc-arr-date" value="<?php echo esc_attr($mca[$i]??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" onchange="tqsValidateLegDates(this)" /></div>
+            <div class="tqs-leg-date-error" data-i18n="err_arr_date_leg" style="display:none;">Arrival date must be on or after departure date.</div>
           </div>
         </div>
         <?php endfor; ?>
       </div>
-      <button type="button" class="tqs-add-leg-btn" onclick="tqsAddLeg()">+ Add Another Leg</button>
+      <button type="button" class="tqs-add-leg-btn" onclick="tqsAddLeg()" data-i18n="btn_add_leg">+ Add Another Leg</button>
     </div>
 
     <!-- PASSENGERS -->
-    <div class="tqs-form-section"><h3>Passengers</h3>
-      <p class="tqs-hint">Maximum 9 passengers total. Infants cannot exceed the number of adults.</p>
+    <div class="tqs-form-section"><h3 data-i18n="section_passengers">Passengers</h3>
+      <p class="tqs-hint" data-i18n="hint_passengers">Maximum 9 passengers total. Infants cannot exceed the number of adults.</p>
       <div class="tqs-pax-grid">
-        <?php foreach(['adult'=>['id'=>'adults','label'=>'Adults','age'=>'12+ years','val'=>$pax_adult],'kids'=>['id'=>'kids','label'=>'Children','age'=>'2 - 11 years','val'=>$pax_kids],'infants'=>['id'=>'infants','label'=>'Infants','age'=>'Under 2 years','val'=>$pax_infant]] as $slug=>$c): ?>
+        <?php foreach([
+          'adult'  =>['id'=>'adults', 'label'=>'Adults',   'age'=>'12+ years',    'val'=>$pax_adult,  'i18n_label'=>'pax_adults',   'i18n_age'=>'pax_adults_age'],
+          'kids'   =>['id'=>'kids',   'label'=>'Children', 'age'=>'2 - 11 years', 'val'=>$pax_kids,   'i18n_label'=>'pax_children', 'i18n_age'=>'pax_children_age'],
+          'infants'=>['id'=>'infants','label'=>'Infants',  'age'=>'Under 2 years','val'=>$pax_infant, 'i18n_label'=>'pax_infants',  'i18n_age'=>'pax_infants_age'],
+        ] as $slug=>$c): ?>
         <div class="tqs-pax-card <?php echo $c['val']>0?'pax-active':''; ?>" id="pax-card-<?php echo esc_attr($slug); ?>">
-          <div class="tqs-pax-info"><div class="tqs-pax-type"><?php echo esc_html($c['label']); ?></div><div class="tqs-pax-age"><?php echo esc_html($c['age']); ?></div></div>
+          <div class="tqs-pax-info"><div class="tqs-pax-type" data-i18n="<?php echo esc_attr($c['i18n_label']); ?>"><?php echo esc_html($c['label']); ?></div><div class="tqs-pax-age" data-i18n="<?php echo esc_attr($c['i18n_age']); ?>"><?php echo esc_html($c['age']); ?></div></div>
           <div class="tqs-pax-counter">
             <button type="button" class="tqs-pax-btn tqs-pax-minus" onclick="tqsChangePax('<?php echo esc_attr($c['id']); ?>',-1)">-</button>
             <span class="tqs-pax-count" id="pax-count-<?php echo esc_attr($c['id']); ?>"><?php echo intval($c['val']); ?></span>
@@ -984,52 +1140,17 @@ function tqs_render_form() {
       <div class="tqs-pax-error" id="tqs-pax-error" style="display:none;"></div>
     </div>
 
-    <!-- TRIP PREFERENCES -->
-    <div class="tqs-form-section"><h3>Trip Preferences</h3>
-      <div class="tqs-row">
-        <div class="tqs-field"><label for="tqs_trip_type">Trip Category</label>
-          <select id="tqs_trip_type" name="tqs_trip_type"><option value="">-- Select --</option>
-            <?php $stt=sanitize_text_field($_POST['tqs_trip_type']??'');
-            foreach(['Leisure / Holiday','Honeymoon','Family Trip','Adventure','Business Travel','Group Tour','Solo Travel','Pilgrimage'] as $t) printf('<option value="%s"%s>%s</option>',esc_attr($t),selected($stt,$t,false),esc_html($t)); ?>
-          </select></div>
-        <div class="tqs-field"><label for="tqs_budget">Approximate Budget (per person)</label>
-          <select id="tqs_budget" name="tqs_budget"><option value="">-- Select --</option>
-            <?php $sb=sanitize_text_field($_POST['tqs_budget']??'');
-            foreach(['Under $500','$500 - $1,000','$1,000 - $2,500','$2,500 - $5,000','$5,000 - $10,000','$10,000+','Flexible'] as $b) printf('<option value="%s"%s>%s</option>',esc_attr($b),selected($sb,$b,false),esc_html($b)); ?>
-          </select></div>
-      </div>
-      <div class="tqs-field tqs-checkboxes"><label>Services Required</label>
-        <div class="tqs-checkbox-grid">
-          <?php $ss=(array)($_POST['tqs_services']??[]);
-          foreach(['Flight Booking','Hotel / Accommodation','Airport Transfer','Car Rental','Tour Guide','Travel Insurance','Visa Assistance','Cruise Booking','All-Inclusive Package'] as $s): $chk=in_array($s,$ss,true)?'checked':''; ?>
-          <label class="tqs-checkbox-label"><input type="checkbox" name="tqs_services[]" value="<?php echo esc_attr($s); ?>" <?php echo $chk; ?>><?php echo esc_html($s); ?></label>
-          <?php endforeach; ?>
-        </div>
-      </div>
-    </div>
-
-    <!-- SPECIAL REQUESTS -->
-    <div class="tqs-form-section"><h3>Special Requests and Comments</h3>
-      <p class="tqs-hint">Let us know anything specific - we will do our best to accommodate your needs.</p>
-      <div class="tqs-comments-grid">
-        <div class="tqs-field tqs-checkboxes"><label>Quick Requests <span class="tqs-optional-tag">optional</span></label>
-          <div class="tqs-checkbox-grid">
-            <?php $sqr=(array)($_POST['tqs_quick_requests']??[]);
-            foreach(['Vegetarian / Vegan Meal','Halal Meal','Baby / Infant Meal','Wheelchair Assistance','Extra Legroom Seat','Window Seat Preferred','Hotel Recommendation Needed','Airport Transfer Required','Visa Assistance Required','Special Occasion (Birthday / Anniversary)','Travelling with Medical Equipment','Travelling with Pet'] as $qr): $chk=in_array($qr,$sqr,true)?'checked':''; ?>
-            <label class="tqs-checkbox-label"><input type="checkbox" name="tqs_quick_requests[]" value="<?php echo esc_attr($qr); ?>" <?php echo $chk; ?>><?php echo esc_html($qr); ?></label>
-            <?php endforeach; ?>
-          </div>
-        </div>
-        <div class="tqs-field">
-          <label for="tqs_message">Additional Comments / Special Requests <span class="tqs-optional-tag">optional</span></label>
-          <textarea id="tqs_message" name="tqs_message" rows="6" class="tqs-comments-box" placeholder="e.g. We are celebrating our honeymoon and would love a window seat..."><?php echo esc_textarea($_POST['tqs_message']??''); ?></textarea>
-          <div class="tqs-char-counter"><span id="tqs-char-count">0</span> / 1000 characters</div>
-        </div>
+    <!-- COMMENTS -->
+    <div class="tqs-form-section tqs-comments-section">
+      <h3><span class="tqs-section-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg></span><span data-i18n="section_comments">Additional Comments</span></h3>
+      <div class="tqs-field">
+        <label for="tqs_comments"><span data-i18n="label_comments">Comments / Special Requests</span> <span class="tqs-optional-tag" data-i18n="opt_optional">optional</span></label>
+        <textarea id="tqs_comments" name="tqs_comments" rows="4" data-i18n-ph="ph_comments" placeholder="Any special requests, preferred airlines, seat preferences, or additional information…" style="resize:vertical;min-height:100px;"><?php echo esc_textarea($_POST['tqs_comments']??''); ?></textarea>
       </div>
     </div>
 
     <div class="tqs-submit-row">
-      <button type="submit" name="tqs_submit" class="tqs-submit-btn">Send My Travel Inquiry</button>
+      <button type="submit" name="tqs_submit" class="tqs-submit-btn" data-i18n="btn_submit">Send My Travel Inquiry</button>
     </div>
   </form>
 </div>
@@ -1043,20 +1164,20 @@ function tqs_render_airport_field( $args ) {
     $label=$args['label']??'Airport'; $name=$args['name']??'airport'; $id=$args['id']??'airport';
     $airports=$args['airports']??[]; $selected=$args['selected']??''; $other_val=$args['other_val']??'';
     $other_name=$args['other_name']??$name.'_other'; $required=!empty($args['required']);
+    $i18n_key=$args['i18n_key']??'';
     $req_star=$required?'<span class="required">*</span>':''; $show_other=($selected==='other');
-    $priority=['Netherlands','Belgium','Pakistan']; $top=[]; foreach($priority as $c){if(isset($airports[$c]))$top[$c]=$airports[$c];}
+    $priority=['Netherlands','Belgium','Pakistan','UAE','Saudi Arabia']; $top=[]; foreach($priority as $country){if(isset($airports[$country]))$top[$country]=$airports[$country];}
     $rest=array_diff_key($airports,array_flip($priority));
     ?>
-    <label for="<?php echo esc_attr($id); ?>"><?php echo esc_html($label); ?> <?php echo $req_star; ?></label>
+    <label for="<?php echo esc_attr($id); ?>"><?php if($i18n_key): ?><span data-i18n="<?php echo esc_attr($i18n_key); ?>"><?php echo esc_html($label); ?></span><?php else: ?><?php echo esc_html($label); ?><?php endif; ?> <?php echo $req_star; ?></label>
     <div class="tqs-airport-wrap">
-      <input type="text" class="tqs-airport-search" placeholder="Search airport or city..." />
       <select name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($id); ?>" class="tqs-airport-select" onchange="tqsToggleOther(this)" <?php echo $required?'required':''; ?>>
-        <option value="">-- Select Airport --</option>
+        <option value="" data-i18n="opt_select_airport">-- Select Airport --</option>
         <?php foreach($top as $country=>$al): ?><optgroup label="<?php echo esc_attr($country); ?>"><?php foreach($al as $code=>$an): ?><option value="<?php echo esc_attr($code); ?>" <?php selected($selected,$code); ?>><?php echo esc_html($an); ?></option><?php endforeach; ?></optgroup><?php endforeach; ?>
-        <optgroup label="Other"><option value="other" <?php selected($selected,'other'); ?>>Other - Enter Manually</option></optgroup>
+        <optgroup label="Other"><option value="other" <?php selected($selected,'other'); ?> data-i18n="opt_other">Other - Enter Manually</option></optgroup>
         <?php foreach($rest as $country=>$al): ?><optgroup label="<?php echo esc_attr($country); ?>"><?php foreach($al as $code=>$an): ?><option value="<?php echo esc_attr($code); ?>" <?php selected($selected,$code); ?>><?php echo esc_html($an); ?></option><?php endforeach; ?></optgroup><?php endforeach; ?>
       </select>
-      <input type="text" name="<?php echo esc_attr($other_name); ?>" class="tqs-airport-other" id="<?php echo esc_attr($id); ?>_other" placeholder="Enter airport name, city or IATA code" value="<?php echo esc_attr($other_val); ?>" style="<?php echo $show_other?'display:block;':'display:none;'; ?>" <?php echo ($show_other&&$required)?'required':''; ?> />
+      <input type="text" name="<?php echo esc_attr($other_name); ?>" class="tqs-airport-other" id="<?php echo esc_attr($id); ?>_other" data-i18n-ph="ph_airport_other" placeholder="Enter airport name, city or IATA code" value="<?php echo esc_attr($other_val); ?>" style="<?php echo $show_other?'display:block;':'display:none;'; ?>" <?php echo ($show_other&&$required)?'required':''; ?> />
     </div>
     <?php
 }
@@ -1069,8 +1190,7 @@ function tqs_send_inquiry_email(
     $from, $from_other, $destination, $dest_other,
     $return_from, $return_from_other, $return_dest, $return_dest_other,
     $travel_date, $return_dep, $return_arr, $mc_legs,
-    $adults, $kids, $infants, $trip_type, $budget, $services,
-    $quick_requests, $message
+    $adults, $kids, $infants, $comments = ''
 ) {
     // FIX: removed duplicate $to=$to= assignment
     $to = get_option( 'tqs_admin_email', get_option( 'admin_email' ) );
@@ -1113,13 +1233,8 @@ function tqs_send_inquiry_email(
     foreach([['Adults','12+ years',$adults],['Children','2 - 11 years',$kids],['Infants','Under 2 years',$infants]] as $ri=>$row){$bg=$ri%2===0?'#f9f9f9':'#fff';$ph.="<tr style='background:{$bg};'><td style='padding:10px 14px;font-weight:bold;'>".esc_html($row[0])."</td><td style='padding:10px 14px;color:#666;'>".esc_html($row[1])."</td><td style='padding:10px 14px;text-align:center;font-size:1.1em;font-weight:bold;color:#1a0a2e;'>".intval($row[2])."</td></tr>";}
     $ph.="<tr style='background:#e8f4fd;border-top:2px solid #1a0a2e;'><td colspan='2' style='padding:10px 14px;font-weight:bold;color:#1a0a2e;'>Total Passengers</td><td style='padding:10px 14px;text-align:center;font-size:1.2em;font-weight:bold;color:#1a0a2e;'>".intval($total)."</td></tr></tbody></table>";
     $b.="<div style='margin-bottom:20px;'><h4 style='color:#1a0a2e;margin:0 0 8px;font-size:1em;border-bottom:2px solid #c724b1;padding-bottom:6px;letter-spacing:.06em;text-transform:uppercase;'>Passengers</h4>{$ph}</div>";
-    $sl=!empty($services)?implode(', ',array_map('esc_html',$services)):'None specified';
-    $b.=tqs_email_section('Trip Preferences',['Trip Category'=>esc_html($trip_type)?:'N/A','Budget (per person)'=>esc_html($budget)?:'N/A','Services Needed'=>$sl]);
-    if(!empty($quick_requests)||!empty($message)){
-        $b.="<div style='margin-bottom:20px;'><h4 style='color:#1a0a2e;margin:0 0 10px;font-size:1em;border-bottom:2px solid #c724b1;padding-bottom:6px;letter-spacing:.06em;text-transform:uppercase;'>Special Requests and Comments</h4>";
-        if(!empty($quick_requests)){$b.="<div style='margin-bottom:12px;'><p style='margin:0 0 8px;font-weight:bold;color:#444;font-size:.88em;text-transform:uppercase;letter-spacing:.05em;'>Quick Requests:</p><div style='display:flex;flex-wrap:wrap;gap:8px;'>";foreach($quick_requests as $qr){$b.="<span style='background:#e8f4fd;color:#1a0a2e;padding:5px 12px;border-radius:20px;font-size:.88em;font-weight:600;border:1px solid #b3d4f0;'>".esc_html($qr)."</span>";}$b.="</div></div>";}
-        if(!empty($message)){$b.="<div style='background:#f0f7ff;border-left:4px solid #c724b1;border-radius:0 6px 6px 0;padding:14px 16px;'><p style='margin:0 0 4px;font-weight:bold;color:#1a0a2e;font-size:.88em;text-transform:uppercase;letter-spacing:.05em;'>Comments:</p><p style='margin:0;line-height:1.6;color:#333;'>".nl2br(esc_html($message))."</p></div>";}
-        $b.="</div>";
+    if ( !empty($comments) ) {
+        $b.="<div style='margin-bottom:20px;'><h4 style='color:#1a0a2e;margin:0 0 8px;font-size:1em;border-bottom:2px solid #c724b1;padding-bottom:6px;letter-spacing:.06em;text-transform:uppercase;'>Comments / Special Requests</h4><div style='background:#f9f9f9;border:1px solid #e0d0f0;border-left:4px solid #c724b1;border-radius:6px;padding:14px 18px;color:#333;font-size:.95em;line-height:1.6;white-space:pre-wrap;'>".esc_html($comments)."</div></div>";
     }
     $b.="</div><div style='background:#1a0a2e;padding:14px;text-align:center;font-size:12px;color:#a87bc0;letter-spacing:.05em;'>Submitted via TQS Travels website inquiry form</div></div></body></html>";
     $headers=['Content-Type: text/html; charset=UTF-8','Reply-To: '.$full_name.' <'.$email.'>'];

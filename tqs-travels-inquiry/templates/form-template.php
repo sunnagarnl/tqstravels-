@@ -334,56 +334,6 @@ $sel_type       = sanitize_text_field( wp_unslash( $_POST['tqs_travel_type'] ?? 
             <div class="tqs-pax-error" id="tqs-pax-error" style="display:none;"></div>
         </div>
 
-        <!-- TRIP PREFERENCES -->
-        <div class="tqs-form-section">
-            <h3>Trip Preferences</h3>
-            <div class="tqs-row">
-                <div class="tqs-field">
-                    <label for="tqs_trip_type">Trip Category</label>
-                    <select id="tqs_trip_type" name="tqs_trip_type">
-                        <option value="">-- Select --</option>
-                        <?php
-                        $trip_types = [ 'Leisure / Holiday', 'Honeymoon', 'Family Trip', 'Adventure', 'Business Travel', 'Group Tour', 'Solo Travel', 'Pilgrimage' ];
-                        $sel_tt     = sanitize_text_field( $_POST['tqs_trip_type'] ?? '' );
-                        foreach ( $trip_types as $t ) {
-                            printf( '<option value="%s"%s>%s</option>', esc_attr( $t ), selected( $sel_tt, $t, false ), esc_html( $t ) );
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="tqs-field">
-                    <label for="tqs_budget">Approximate Budget (per person)</label>
-                    <select id="tqs_budget" name="tqs_budget">
-                        <option value="">-- Select --</option>
-                        <?php
-                        $budgets = [ 'Under $500', '$500 - $1,000', '$1,000 - $2,500', '$2,500 - $5,000', '$5,000 - $10,000', '$10,000+', 'Flexible' ];
-                        $sel_b   = sanitize_text_field( $_POST['tqs_budget'] ?? '' );
-                        foreach ( $budgets as $b ) {
-                            printf( '<option value="%s"%s>%s</option>', esc_attr( $b ), selected( $sel_b, $b, false ), esc_html( $b ) );
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
-            <div class="tqs-field tqs-checkboxes">
-                <label>Services Required</label>
-                <div class="tqs-checkbox-grid">
-                    <?php
-                    $services_opts = [ 'Flight Booking', 'Hotel / Accommodation', 'Airport Transfer', 'Car Rental', 'Tour Guide', 'Travel Insurance', 'Visa Assistance', 'Cruise Booking', 'All-Inclusive Package' ];
-                    $sel_services  = (array) ( $_POST['tqs_services'] ?? [] );
-                    foreach ( $services_opts as $s ) :
-                        $chk = in_array( $s, $sel_services, true ) ? 'checked' : '';
-                    ?>
-                    <label class="tqs-checkbox-label">
-                        <input type="checkbox" name="tqs_services[]"
-                               value="<?php echo esc_attr( $s ); ?>" <?php echo $chk; ?>>
-                        <?php echo esc_html( $s ); ?>
-                    </label>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </div>
-
         <!-- SPECIAL REQUESTS AND COMMENTS -->
         <div class="tqs-form-section">
             <h3>Special Requests and Comments</h3>
@@ -394,11 +344,8 @@ $sel_type       = sanitize_text_field( wp_unslash( $_POST['tqs_travel_type'] ?? 
                     <div class="tqs-checkbox-grid">
                         <?php
                         $quick_opts = [
-                            'Vegetarian / Vegan Meal', 'Halal Meal', 'Baby / Infant Meal',
                             'Wheelchair Assistance', 'Extra Legroom Seat', 'Window Seat Preferred',
-                            'Hotel Recommendation Needed', 'Airport Transfer Required',
-                            'Visa Assistance Required', 'Special Occasion (Birthday / Anniversary)',
-                            'Travelling with Medical Equipment', 'Travelling with Pet',
+                            'Visa Assistance Required',
                         ];
                         $sel_qr = (array) ( $_POST['tqs_quick_requests'] ?? [] );
                         foreach ( $quick_opts as $qr ) :
@@ -453,7 +400,6 @@ function tqs_render_airport_field( $args ) {
     ?>
     <label for="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $label ); ?> <?php echo $req_star; ?></label>
     <div class="tqs-airport-wrap">
-        <input type="text" class="tqs-airport-search" placeholder="Search airport or city..." aria-label="Search airports" />
         <select name="<?php echo esc_attr( $name ); ?>"
                 id="<?php echo esc_attr( $id ); ?>"
                 class="tqs-airport-select"
