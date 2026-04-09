@@ -167,9 +167,23 @@ function tqs_output_css() { ?>
 .tqs-submit-btn{font-size:1.00em;padding:13px 46px;}
 /* Language switcher */
 .tqs-lang-switcher{display:flex;justify-content:flex-end;gap:8px;margin-bottom:14px;}
-.tqs-lang-btn{background:none;border:2px solid transparent;border-radius:7px;cursor:pointer;font-size:1.55em;padding:2px 8px;line-height:1;transition:border-color .15s,transform .15s,box-shadow .15s;}
-.tqs-lang-btn:hover{border-color:var(--accent);transform:scale(1.1);}
-.tqs-lang-btn.tqs-lang-active{border-color:var(--primary);box-shadow:0 0 10px var(--primary-glow);}
+.tqs-lang-btn{background:none;border:2px solid transparent;border-radius:7px;cursor:pointer;font-size:.88em;padding:5px 10px;line-height:1;transition:border-color .15s,transform .15s,box-shadow .15s,color .15s;display:flex;align-items:center;gap:6px;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:.07em;color:var(--text-muted);}
+.tqs-lang-btn:hover{border-color:var(--accent);transform:scale(1.05);color:var(--accent);}
+.tqs-lang-btn.tqs-lang-active{border-color:var(--primary);box-shadow:0 0 10px var(--primary-glow);color:var(--accent-light);}
+/* CSS flags */
+.tqs-flag{display:inline-block;width:26px;height:17px;border-radius:3px;flex-shrink:0;background-size:cover;border:1px solid rgba(255,255,255,.15);}
+.tqs-flag-gb{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30'%3E%3Crect width='60' height='30' fill='%23012169'/%3E%3Cpath d='M0,0 L60,30 M60,0 L0,30' stroke='%23fff' stroke-width='6'/%3E%3Cpath d='M0,0 L60,30 M60,0 L0,30' stroke='%23C8102E' stroke-width='4'/%3E%3Cpath d='M30,0 v30 M0,15 h60' stroke='%23fff' stroke-width='10'/%3E%3Cpath d='M30,0 v30 M0,15 h60' stroke='%23C8102E' stroke-width='6'/%3E%3C/svg%3E");}
+.tqs-flag-nl{background:linear-gradient(to bottom,%23AE1C28 33.33%,white 33.33%,white 66.66%,%2321468B 66.66%);}
+/* Type card icons */
+.tqs-type-icon{display:flex;align-items:center;justify-content:center;margin-bottom:4px;color:var(--text-muted);transition:color .15s;}
+.tqs-type-card.active .tqs-type-icon,.tqs-type-card:hover .tqs-type-icon{color:var(--accent);}
+/* Section heading icons */
+.tqs-section-icon{display:inline-block;vertical-align:middle;margin-right:7px;position:relative;top:-1px;opacity:.9;}
+/* Field label icons */
+.tqs-label-icon{display:inline-block;vertical-align:middle;margin-right:4px;position:relative;top:-1px;opacity:.75;}
+/* Passenger icons */
+.tqs-pax-icon{display:flex;align-items:center;justify-content:center;color:var(--text-muted);flex-shrink:0;min-width:30px;transition:color .2s;}
+.tqs-pax-card.pax-active .tqs-pax-icon{color:var(--accent);}
 </style>
 <?php }
 
@@ -965,8 +979,8 @@ function tqs_render_form() {
 <div class="tqs-form-wrapper">
   <div class="tqs-form-header">
     <div class="tqs-lang-switcher">
-      <button type="button" class="tqs-lang-btn tqs-lang-active" data-lang="en" onclick="tqsSwitchLang('en')" title="English">&#127468;&#127463;</button>
-      <button type="button" class="tqs-lang-btn" data-lang="nl" onclick="tqsSwitchLang('nl')" title="Nederlands">&#127475;&#127473;</button>
+      <button type="button" class="tqs-lang-btn tqs-lang-active" data-lang="en" onclick="tqsSwitchLang('en')" title="English"><span class="tqs-flag tqs-flag-gb"></span> EN</button>
+      <button type="button" class="tqs-lang-btn" data-lang="nl" onclick="tqsSwitchLang('nl')" title="Nederlands"><span class="tqs-flag tqs-flag-nl"></span> NL</button>
     </div>
     <h2 data-i18n="header_title">Plan Your Dream Trip with TQS Travels</h2>
     <p data-i18n="header_subtitle">Fill in your travel requirements and our team will get back to you within 24 hours.</p>
