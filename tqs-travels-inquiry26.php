@@ -236,7 +236,7 @@ nl:{
   hint_multicity:'Minimaal 3 vluchten vereist. Klik op "+ Voeg Vlucht Toe" om meer stops toe te voegen.',
   label_traveling_from:'Vertrekplaats',label_destination:'Bestemming',
   label_dep_date:'Vertrekdatum',label_return_date:'Retourdatum',
-  label_dep_airport:'Vertregluchthaven',label_arr_airport:'Aankomstluchthaven',label_arr_date:'Aankomstdatum',
+  label_dep_airport:'Vertrekluchthaven',label_arr_airport:'Aankomstluchthaven',label_arr_date:'Aankomstdatum',
   opt_select_airport:'-- Selecteer Luchthaven --',opt_other:'Anders - Handmatig Invoeren',
   ph_airport_other:'Voer luchthavennaam, stad of IATA-code in',
   btn_add_leg:'+ Voeg Vlucht Toe',btn_remove:'Verwijderen',leg_label:'Vlucht',
@@ -553,6 +553,26 @@ function tqs_get_airports() {
             'CWP'=>'Chitral - Chitral Airport (CWP)',
             'WNS'=>'Nawabshah - Shaheed Benazirabad Airport (WNS)',
             'PZH'=>'Zhob - Zhob Airport (PZH)',
+        ],
+        'UAE' => [
+            'DXB'=>'Dubai - Dubai International Airport (DXB)',
+            'AUH'=>'Abu Dhabi - Abu Dhabi International Airport (AUH)',
+            'SHJ'=>'Sharjah - Sharjah International Airport (SHJ)',
+            'DWC'=>'Dubai - Al Maktoum International Airport (DWC)',
+            'RKT'=>'Ras Al Khaimah - Ras Al Khaimah International Airport (RKT)',
+            'FJR'=>'Fujairah - Fujairah International Airport (FJR)',
+        ],
+        'Saudi Arabia' => [
+            'RUH'=>'Riyadh - King Khalid International Airport (RUH)',
+            'JED'=>'Jeddah - King Abdulaziz International Airport (JED)',
+            'DMM'=>'Dammam - King Fahd International Airport (DMM)',
+            'MED'=>'Medina - Prince Mohammad bin Abdulaziz Airport (MED)',
+            'AHB'=>'Abha - Abha Regional Airport (AHB)',
+            'TIF'=>'Taif - Taif Regional Airport (TIF)',
+            'GIZ'=>'Jizan - King Abdullah bin Abdulaziz Airport (GIZ)',
+            'TUU'=>'Tabuk - Tabuk Regional Airport (TUU)',
+            'HOF'=>'Al Ahsa - Al-Ahsa International Airport (HOF)',
+            'ELQ'=>'Al Qassim - Prince Nayef bin Abdulaziz Airport (ELQ)',
         ],
         'Germany' => [
             'FRA'=>'Frankfurt - Frankfurt Airport (FRA)',
@@ -1040,8 +1060,8 @@ function tqs_render_form() {
     </div>
 
     <!-- MULTI-CITY -->
-    <div class="tqs-form-section tqs-type-section" id="tqs-section-multicity"><h3>Multi-City Legs</h3>
-      <p class="tqs-hint">Minimum 3 legs required. Click "Add Another Leg" to add more stops.</p>
+    <div class="tqs-form-section tqs-type-section" id="tqs-section-multicity"><h3 data-i18n="section_multicity">Multi-City Legs</h3>
+      <p class="tqs-hint" data-i18n="hint_multicity">Minimum 3 legs required. Click "+ Add Another Leg" to add more stops.</p>
       <div id="tqs-mc-legs">
         <?php
         $mcf=(array)($_POST['tqs_mc_from']??['','','']);$mct=(array)($_POST['tqs_mc_to']??['','','']);
@@ -1051,31 +1071,35 @@ function tqs_render_form() {
         for($i=0;$i<$mlc;$i++): ?>
         <div class="tqs-mc-leg" data-leg="<?php echo esc_attr($i); ?>">
           <div class="tqs-mc-leg-header">
-            <span class="tqs-leg-badge">Leg <?php echo intval($i+1); ?></span>
-            <?php if($i>=3): ?><button type="button" class="tqs-remove-leg" onclick="tqsRemoveLeg(this)">Remove</button><?php endif; ?>
+            <span class="tqs-leg-badge" data-leg-num="<?php echo intval($i+1); ?>"><span data-i18n="leg_label">Leg</span> <?php echo intval($i+1); ?></span>
+            <?php if($i>=3): ?><button type="button" class="tqs-remove-leg" onclick="tqsRemoveLeg(this)" data-i18n="btn_remove">Remove</button><?php endif; ?>
           </div>
           <div class="tqs-row">
-            <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Departure Airport','name'=>'tqs_mc_from[]','id'=>'tqs_mc_from_'.$i,'airports'=>$airports,'selected'=>sanitize_text_field($mcf[$i]??''),'other_val'=>sanitize_text_field($mcfo[$i]??''),'other_name'=>'tqs_mc_from_other[]']); ?></div>
-            <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Arrival Airport','name'=>'tqs_mc_to[]','id'=>'tqs_mc_to_'.$i,'airports'=>$airports,'selected'=>sanitize_text_field($mct[$i]??''),'other_val'=>sanitize_text_field($mcto[$i]??''),'other_name'=>'tqs_mc_to_other[]']); ?></div>
+            <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Departure Airport','i18n_key'=>'label_dep_airport','name'=>'tqs_mc_from[]','id'=>'tqs_mc_from_'.$i,'airports'=>$airports,'selected'=>sanitize_text_field($mcf[$i]??''),'other_val'=>sanitize_text_field($mcfo[$i]??''),'other_name'=>'tqs_mc_from_other[]']); ?></div>
+            <div class="tqs-field"><?php tqs_render_airport_field(['label'=>'Arrival Airport','i18n_key'=>'label_arr_airport','name'=>'tqs_mc_to[]','id'=>'tqs_mc_to_'.$i,'airports'=>$airports,'selected'=>sanitize_text_field($mct[$i]??''),'other_val'=>sanitize_text_field($mcto[$i]??''),'other_name'=>'tqs_mc_to_other[]']); ?></div>
           </div>
           <div class="tqs-row tqs-mc-dates-row">
-            <div class="tqs-field tqs-field--date"><label>Departure Date <span class="required">*</span></label><input type="date" name="tqs_mc_dep_date[]" class="tqs-mc-dep-date" value="<?php echo esc_attr($mcd[$i]??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" onchange="tqsValidateLegDates(this)" /></div>
-            <div class="tqs-field tqs-field--date"><label>Arrival Date <span class="required">*</span></label><input type="date" name="tqs_mc_arr_date[]" class="tqs-mc-arr-date" value="<?php echo esc_attr($mca[$i]??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" onchange="tqsValidateLegDates(this)" /></div>
-            <div class="tqs-leg-date-error" style="display:none;">Arrival date must be on or after departure date.</div>
+            <div class="tqs-field tqs-field--date"><label><span data-i18n="label_dep_date">Departure Date</span> <span class="required">*</span></label><input type="date" name="tqs_mc_dep_date[]" class="tqs-mc-dep-date" value="<?php echo esc_attr($mcd[$i]??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" onchange="tqsValidateLegDates(this)" /></div>
+            <div class="tqs-field tqs-field--date"><label><span data-i18n="label_arr_date">Arrival Date</span> <span class="required">*</span></label><input type="date" name="tqs_mc_arr_date[]" class="tqs-mc-arr-date" value="<?php echo esc_attr($mca[$i]??''); ?>" min="<?php echo esc_attr(date('Y-m-d')); ?>" onchange="tqsValidateLegDates(this)" /></div>
+            <div class="tqs-leg-date-error" data-i18n="err_arr_date_leg" style="display:none;">Arrival date must be on or after departure date.</div>
           </div>
         </div>
         <?php endfor; ?>
       </div>
-      <button type="button" class="tqs-add-leg-btn" onclick="tqsAddLeg()">+ Add Another Leg</button>
+      <button type="button" class="tqs-add-leg-btn" onclick="tqsAddLeg()" data-i18n="btn_add_leg">+ Add Another Leg</button>
     </div>
 
     <!-- PASSENGERS -->
-    <div class="tqs-form-section"><h3>Passengers</h3>
-      <p class="tqs-hint">Maximum 9 passengers total. Infants cannot exceed the number of adults.</p>
+    <div class="tqs-form-section"><h3 data-i18n="section_passengers">Passengers</h3>
+      <p class="tqs-hint" data-i18n="hint_passengers">Maximum 9 passengers total. Infants cannot exceed the number of adults.</p>
       <div class="tqs-pax-grid">
-        <?php foreach(['adult'=>['id'=>'adults','label'=>'Adults','age'=>'12+ years','val'=>$pax_adult],'kids'=>['id'=>'kids','label'=>'Children','age'=>'2 - 11 years','val'=>$pax_kids],'infants'=>['id'=>'infants','label'=>'Infants','age'=>'Under 2 years','val'=>$pax_infant]] as $slug=>$c): ?>
+        <?php foreach([
+          'adult'  =>['id'=>'adults', 'label'=>'Adults',   'age'=>'12+ years',    'val'=>$pax_adult,  'i18n_label'=>'pax_adults',   'i18n_age'=>'pax_adults_age'],
+          'kids'   =>['id'=>'kids',   'label'=>'Children', 'age'=>'2 - 11 years', 'val'=>$pax_kids,   'i18n_label'=>'pax_children', 'i18n_age'=>'pax_children_age'],
+          'infants'=>['id'=>'infants','label'=>'Infants',  'age'=>'Under 2 years','val'=>$pax_infant, 'i18n_label'=>'pax_infants',  'i18n_age'=>'pax_infants_age'],
+        ] as $slug=>$c): ?>
         <div class="tqs-pax-card <?php echo $c['val']>0?'pax-active':''; ?>" id="pax-card-<?php echo esc_attr($slug); ?>">
-          <div class="tqs-pax-info"><div class="tqs-pax-type"><?php echo esc_html($c['label']); ?></div><div class="tqs-pax-age"><?php echo esc_html($c['age']); ?></div></div>
+          <div class="tqs-pax-info"><div class="tqs-pax-type" data-i18n="<?php echo esc_attr($c['i18n_label']); ?>"><?php echo esc_html($c['label']); ?></div><div class="tqs-pax-age" data-i18n="<?php echo esc_attr($c['i18n_age']); ?>"><?php echo esc_html($c['age']); ?></div></div>
           <div class="tqs-pax-counter">
             <button type="button" class="tqs-pax-btn tqs-pax-minus" onclick="tqsChangePax('<?php echo esc_attr($c['id']); ?>',-1)">-</button>
             <span class="tqs-pax-count" id="pax-count-<?php echo esc_attr($c['id']); ?>"><?php echo intval($c['val']); ?></span>
@@ -1093,7 +1117,7 @@ function tqs_render_form() {
     </div>
 
     <div class="tqs-submit-row">
-      <button type="submit" name="tqs_submit" class="tqs-submit-btn">Send My Travel Inquiry</button>
+      <button type="submit" name="tqs_submit" class="tqs-submit-btn" data-i18n="btn_submit">Send My Travel Inquiry</button>
     </div>
   </form>
 </div>
@@ -1107,19 +1131,20 @@ function tqs_render_airport_field( $args ) {
     $label=$args['label']??'Airport'; $name=$args['name']??'airport'; $id=$args['id']??'airport';
     $airports=$args['airports']??[]; $selected=$args['selected']??''; $other_val=$args['other_val']??'';
     $other_name=$args['other_name']??$name.'_other'; $required=!empty($args['required']);
+    $i18n_key=$args['i18n_key']??'';
     $req_star=$required?'<span class="required">*</span>':''; $show_other=($selected==='other');
-    $priority=['Netherlands','Belgium','Pakistan']; $top=[]; foreach($priority as $c){if(isset($airports[$c]))$top[$c]=$airports[$c];}
+    $priority=['Netherlands','Belgium','Pakistan','UAE','Saudi Arabia']; $top=[]; foreach($priority as $country){if(isset($airports[$country]))$top[$country]=$airports[$country];}
     $rest=array_diff_key($airports,array_flip($priority));
     ?>
-    <label for="<?php echo esc_attr($id); ?>"><?php echo esc_html($label); ?> <?php echo $req_star; ?></label>
+    <label for="<?php echo esc_attr($id); ?>"><?php if($i18n_key): ?><span data-i18n="<?php echo esc_attr($i18n_key); ?>"><?php echo esc_html($label); ?></span><?php else: ?><?php echo esc_html($label); ?><?php endif; ?> <?php echo $req_star; ?></label>
     <div class="tqs-airport-wrap">
       <select name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($id); ?>" class="tqs-airport-select" onchange="tqsToggleOther(this)" <?php echo $required?'required':''; ?>>
-        <option value="">-- Select Airport --</option>
+        <option value="" data-i18n="opt_select_airport">-- Select Airport --</option>
         <?php foreach($top as $country=>$al): ?><optgroup label="<?php echo esc_attr($country); ?>"><?php foreach($al as $code=>$an): ?><option value="<?php echo esc_attr($code); ?>" <?php selected($selected,$code); ?>><?php echo esc_html($an); ?></option><?php endforeach; ?></optgroup><?php endforeach; ?>
-        <optgroup label="Other"><option value="other" <?php selected($selected,'other'); ?>>Other - Enter Manually</option></optgroup>
+        <optgroup label="Other"><option value="other" <?php selected($selected,'other'); ?> data-i18n="opt_other">Other - Enter Manually</option></optgroup>
         <?php foreach($rest as $country=>$al): ?><optgroup label="<?php echo esc_attr($country); ?>"><?php foreach($al as $code=>$an): ?><option value="<?php echo esc_attr($code); ?>" <?php selected($selected,$code); ?>><?php echo esc_html($an); ?></option><?php endforeach; ?></optgroup><?php endforeach; ?>
       </select>
-      <input type="text" name="<?php echo esc_attr($other_name); ?>" class="tqs-airport-other" id="<?php echo esc_attr($id); ?>_other" placeholder="Enter airport name, city or IATA code" value="<?php echo esc_attr($other_val); ?>" style="<?php echo $show_other?'display:block;':'display:none;'; ?>" <?php echo ($show_other&&$required)?'required':''; ?> />
+      <input type="text" name="<?php echo esc_attr($other_name); ?>" class="tqs-airport-other" id="<?php echo esc_attr($id); ?>_other" data-i18n-ph="ph_airport_other" placeholder="Enter airport name, city or IATA code" value="<?php echo esc_attr($other_val); ?>" style="<?php echo $show_other?'display:block;':'display:none;'; ?>" <?php echo ($show_other&&$required)?'required':''; ?> />
     </div>
     <?php
 }
